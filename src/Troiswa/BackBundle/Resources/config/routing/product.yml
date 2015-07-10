@@ -1,0 +1,55 @@
+troiswa_back_product:
+    path: /
+    defaults: { _controller:TroiswaBackBundle:Product:displayProduct }
+
+troiswa_back_product_info:
+    path: /information/{idprod}
+    defaults: { _controller:TroiswaBackBundle:Product:displayInfoProduct }
+
+troiswa_back_product_add:
+    path: /add
+    defaults: { _controller:TroiswaBackBundle:Product:addProduct }
+
+troiswa_back_product_update:
+    path: /update/{idprod}
+    defaults: { _controller:TroiswaBackBundle:Product:updateProduct }
+
+troiswa_back_product_delete:
+    path: /delete/{idprod}
+    defaults: { _controller:TroiswaBackBundle:Product:deleteProduct }
+
+troiswa_back_product_active:
+    path: /active
+    defaults: { _controller:TroiswaBackBundle:Product:displayActiveProduct }
+
+troiswa_back_product_limit:
+    path: /limit
+    defaults: { _controller:TroiswaBackBundle:Product:displayLimitNbProduct }
+
+
+troiswa_back_product_visible:
+    path: /changeVisible/{idprod}/{action}
+    defaults: { _controller:TroiswaBackBundle:Product:displayVisibleProduct }
+#    requirements:
+#            idprod: \d+
+#            action:
+
+troiswa_back_product_title:
+    path: /title
+    defaults: { _controller:TroiswaBackBundle:Main:displayTitleProduct }
+
+troiswa_back_product_qty:
+    path: /displayByQty
+    defaults: { _controller:TroiswaBackBundle:Main:displayProductByQuantity }
+
+troiswa_back_product_criteria:
+    path: /displayByCriteria
+    defaults: { _controller:TroiswaBackBundle:Main:displayProductByCriteria }
+
+troiswa_back_product_groupby:
+    path: /displayGroupByActive
+    defaults: { _controller:TroiswaBackBundle:Main:displayProductGroupByActive }
+
+troiswa_back_product_priceBetween:
+    path: /displayBetweenPrice
+    defaults: { _controller:TroiswaBackBundle:Main:displayProductBetweenPrice }

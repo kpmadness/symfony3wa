@@ -1,0 +1,42 @@
+#troiswa_back_homepage:
+#    path:     /hello/{name}
+#    defaults: { _controller: TroiswaBackBundle:Default:index }
+
+
+troiswa_back_administration:
+    path: /admin
+    defaults: { _controller:TroiswaBackBundle:Main:index }
+
+troiswa_back_cgv:
+    path: /cgv
+    defaults: { _controller:TroiswaBackBundle:Static:displayCGV }
+
+troiswa_back_cgu:
+    path: /cgu
+    defaults: { _controller:TroiswaBackBundle:Static:displayCGU }
+
+troiswa_back_resource_category:
+    resource: "@TroiswaBackBundle/Resources/config/routing/category.yml"
+    prefix:   /category
+
+troiswa_back_resource_contact:
+    resource: "@TroiswaBackBundle/Resources/config/routing/contact.yml"
+    prefix:   /
+
+troiswa_back_resource_product:
+    resource: "@TroiswaBackBundle/Resources/config/routing/product.yml"
+    prefix:   /product
+
+troiswa_back_resource_static:
+    resource: "@TroiswaBackBundle/Resources/config/routing/static.yml"
+    prefix:   /
+
+troiswa_back_resource_template:
+    resource: "@TroiswaBackBundle/Resources/config/routing/template.yml"
+    prefix:   /
+
+
+
+
+
+

@@ -1,0 +1,49 @@
+<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav">
+        {% block sidebar_menu %}
+        <li {% if routePath=="troiswa_back_administration" %} class="active" {% endif %}>
+            <a href="{{ path('troiswa_back_administration') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+        </li>
+        <li {% if routePath=="troiswa_back_contact" %} class="active" {% endif %}>
+            <a href="{{ path('troiswa_back_contact') }}"><i class="fa fa-fw fa-dashboard"></i> Contact</a>
+        </li>
+        <li {% if routePath=="troiswa_back_feedback" %} class="active" {% endif %}>
+            <a href="{{ path('troiswa_back_feedback') }}"><i class="fa fa-fw fa-dashboard"></i> Feedback</a>
+        </li>
+        <li {% if routePath=="troiswa_back_product" %} class="active" {% endif %}>
+            <a href="{{ path('troiswa_back_product') }}"><i class="fa fa-fw fa-dashboard"></i> Product</a>
+        </li>
+        <li {% if routePath=="troiswa_back_category" %} class="active" {% endif %}>
+            <a href="{{ path('troiswa_back_category') }}"><i class="fa fa-fw fa-dashboard"></i> Category</a>
+        </li>
+        <li>
+            <a href="javascript:;" data-toggle="collapse" data-target="#navcat">
+                <i class="fa fa-fw fa-arrows-v"></i>
+                    Category
+                <i class="fa fa-fw fa-caret-down"></i>
+            </a>
+            {{ render(controller('TroiswaBackBundle:Category:displayCategoryMenu')) }}
+        </li>
+        <li>
+            <a href="javascript:;" data-toggle="collapse" data-target="#demo">
+                <i class="fa fa-fw fa-arrows-v"></i>
+                    Nos conditions
+                <i class="fa fa-fw fa-caret-down"></i>
+            </a>
+            <ul id="demo" class="collapse nav navbar-nav">
+                <li style="width: 100%" {% if routePath=="troiswa_back_cgv" %} class="active" {% endif %}>
+                    <a href="{{ path('troiswa_back_cgv') }}">CGV</a>
+                </li>
+                <li style="width: 100%" {% if routePath=="troiswa_back_cgu" %} class="active" {% endif %}>
+                    <a href="{{ path('troiswa_back_cgu') }}">CGU</a>
+                </li>
+            </ul>
+        </li>
+        {% endblock %}
+    </ul>
+</div>
+
+
+<!-- /.navbar-collapse -->

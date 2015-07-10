@@ -1,0 +1,11 @@
+{% extends "TroiswaBackBundle::layout-test.html.twig" %}
+
+{% block contenu %}
+    blabla
+{% endblock %}
+
+{% block test %}
+    {#{{ parent() }}#}
+    modification
+    {{ parent() }}
+{% endblock %}

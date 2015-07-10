@@ -1,0 +1,19 @@
+troiswa_back_equipes:
+    path: /equipes
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: "TroiswaBackBundle:Static:equipes.html.twig"
+
+troiswa_back_training_page:
+    path: /training/{chaine}
+    defaults: { _controller:TroiswaBackBundle:Static:displayTrainingPage , chaine:"test"}
+    requirements:
+            chaine: "^toto$"
+
+troiswa_back_template:
+    path: /heritage_template
+    defaults: { _controller:TroiswaBackBundle:Static:displayTemplatePage }
+
+troiswa_back_test_templating:
+    path: /test_templating
+    defaults: { _controller:TroiswaBackBundle:Static:displayTemplateTest }

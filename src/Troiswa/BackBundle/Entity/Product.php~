@@ -1,0 +1,47 @@
+<?php
+
+namespace Troiswa\BackBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Product
+ */
+class Product
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var string
+     */
+    private $description;
+
+    /**
+     * @var float
+     */
+    private $price;
+
+    /**
+     * @var boolean
+     */
+    private $active;
+
+    /**
+     * @var integer
+     */
+    private $quantity;
+
+
+
+    public function displayTest() {
+        return 'test';
+    }
+}

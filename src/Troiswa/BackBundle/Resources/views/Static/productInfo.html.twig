@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Produits</title>
+</head>
+<body>
+    <a href="{{ path('troiswa_back_administration')}}">Accueil</a>
+    <a href="{{ path('troiswa_back_product')}}">Retour Liste Produits</a>
+    <h1>Information du produit {{ product.id }}</h1>
+    <ul>
+        <li>{{ product.title }}</li>
+        <li>{{ product.description }}</li>
+        <li>{{ product.date_created | date('d/m/Y') }}</li>
+        <li>{{ product.prix }}</li>
+    </ul>
+</body>
+</html>

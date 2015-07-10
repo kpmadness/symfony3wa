@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}
+                a definir
+            {% endblock %}
+        </title>
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset("assets/css/style.css", absolute=true) }}"/>
+        {% endblock %}
+        {% block javascript %}
+            <link rel="javascript" href="{{ asset("assets/css/app.js", absolute=true) }}"/>
+        {% endblock %}
+    </head>
+    <body>
+    {% set menu = "mon super menu" %}
+    {% include "TroiswaBackBundle:Static:navigation.html.twig" with {"menu" : menu} only  %}
+        <h1>Bienvenue sur mon site</h1>
+        {% block titre_paragraphe %}
+        {% endblock %}
+        <p>
+            {% block paragraphe %}
+                du super contenu
+                    {% block info %}
+                    {% endblock %}
+            {% endblock %}
+        </p>
+        <img src="{{ asset('assets/img/schtroumpf.jpeg', absolute=true) }}" />
+    </body>
+</html>

@@ -1,0 +1,6 @@
+/web/bundles
+/app/bootstragit p*
+/app/cache/*
+/app/logs/*
+/vendor/
+/app/config/parameters.yml

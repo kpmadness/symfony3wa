@@ -1,0 +1,46 @@
+{% extends "TroiswaBackBundle::layout-admin.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("assets/css/plugins/morris.css", absolute=true) }}">
+{% endblock %}
+
+{% block h1 %}
+    Gestion des Catégories
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        <i class="fa fa-dashboard"></i>  Information de la catégorie : {{ category.title }}
+    </li>
+{% endblock %}
+
+{% block sidebar_menu %}
+    <li class="active">
+        {% if routePath!="troiswa_back_administration" %}
+            <a href="{{ path('troiswa_back_administration') }}">
+                <i class="fa fa-fw fa-dashboard"></i> Accueil
+            </a>
+        {% else %}
+            <i class="fa fa-fw fa-dashboard"></i> Accueil
+        {% endif %}
+    </li>
+    <li class="active">
+        <a href="{{ path('troiswa_back_contact') }}">
+            <i class="fa fa-fw fa-dashboard"></i> Mes Categories
+        </a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <ul>
+        <li>Catégorie : {{ category.title }}</li>
+        <li>Description du produit : {{ category.description }}</li>
+        <li>Position : {{ category.position }}</li>
+    </ul>
+
+    <p>
+        <a href="{{ path('troiswa_back_category') }}" class="btn btn-success">Retour</a>
+    </p>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "TroiswaBackBundle::layout-admin.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("assets/css/plugins/morris.css", absolute=true) }}">
+{% endblock %}
+
+{% block h1 %}
+    Gestion des Produits
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        <i class="fa fa-dashboard"></i> Liste des produits
+    </li>
+{% endblock %}
+
+{% block sidebar_menu %}
+    <li class="active">
+        {% if routePath!="troiswa_back_administration" %}
+            <a href="{{ path('troiswa_back_administration') }}">
+                <i class="fa fa-fw fa-dashboard"></i> Accueil
+            </a>
+        {% else %}
+            <i class="fa fa-fw fa-dashboard"></i> Accueil
+        {% endif %}
+    </li>
+    <li class="active">
+        <a href="{{ path('troiswa_back_contact') }}">
+            <i class="fa fa-fw fa-dashboard"></i> Mes Produits
+        </a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="table-responsive">
+        <p style="float:right">
+            <a href="{{ path('troiswa_back_product_add') }}" class="btn btn-primary">Créer un produit</a>
+        </p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Publié</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <input class="rubrique" type="hidden" value="{{ routePath }}"/>
+            {% for oneProduct in products %}
+            <tr>
+                <td>{{ oneProduct.title }}</td>
+                <td>{{ oneProduct.description }}</td>
+                <td>{{ oneProduct.price }}</td>
+                <td>{{ oneProduct.quantity }}</td>
+                <td>
+                    {% if oneProduct.active==1 %}
+                        {% set enable=0 %}
+                        Oui
+                    {% else %}
+                        {% set enable=1 %}
+                        Non
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('troiswa_back_product_info', { idprod: oneProduct.id }) }}" class="btn btn-info">Voir</a>
+                    <a href="{{ path('troiswa_back_product_update', { idprod: oneProduct.id }) }}" class="btn btn-warning">Editer</a>
+                    <a href="{{ path('troiswa_back_product_delete', { idprod: oneProduct.id }) }}" class="btn btn-danger">Supprimer</a>
+                     / <a href="{{ path('troiswa_back_product_visible', { idprod: oneProduct.id, action:  enable }) }}" class="btn btn-default">
+                        {% if oneProduct.active==1 %}
+                            Dépublier
+                        {% else %}
+                            Publier
+                        {% endif %}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <p>
+            <a href="{{ path('troiswa_back_product_limit', { nb : 1}) }}" class="btn btn-success">1</a>
+            <a href="{{ path('troiswa_back_product_limit', { nb : 3}) }}" class="btn btn-success">3</a>
+            <a href="{{ path('troiswa_back_product_limit', { nb : 10}) }}" class="btn btn-success">10</a>
+            <a href="{{ path('troiswa_back_product_limit') }}" class="btn btn-success">all</a>
+
+            <form action=""
+        </p>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('/assets/js/remove.js', absolute=true) }}"></script>
+{% endblock %}

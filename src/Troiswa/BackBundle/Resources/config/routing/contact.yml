@@ -1,0 +1,7 @@
+troiswa_back_contact:
+    path: /contact
+    defaults: { _controller:TroiswaBackBundle:Static:contact }
+
+troiswa_back_feedback:
+    path: /feedback
+    defaults: { _controller:TroiswaBackBundle:Static:feedback }

@@ -1,0 +1,61 @@
+{% extends "TroiswaBackBundle::layout-admin.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("assets/css/plugins/morris.css", absolute=true) }}">
+{% endblock %}
+
+{% block h1 %}
+    Gestion des Catégories
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        <i class="fa fa-dashboard"></i>
+        {% if routePath=="troiswa_back_category_add" %}
+            Ajouter une catégorie
+        {% else %}
+            Modifier une catégorie
+        {% endif %}
+    </li>
+{% endblock %}
+
+{% block sidebar_menu %}
+    <li class="active">
+        {% if routePath!="troiswa_back_administration" %}
+            <a href="{{ path('troiswa_back_administration') }}">
+                <i class="fa fa-fw fa-dashboard"></i> Accueil
+            </a>
+        {% else %}
+            <i class="fa fa-fw fa-dashboard"></i> Accueil
+        {% endif %}
+    </li>
+    <li class="active">
+        <a href="{{ path('troiswa_back_contact') }}">
+            <i class="fa fa-fw fa-dashboard"></i> Mes Catégories
+        </a>
+    </li>
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(formCategory) }}
+    <div class="form-group">
+        {{ form_label(formCategory.title,"Titre", {"label_attr":{class : 'form-label'}}) }}
+        {{ form_errors(formCategory.title) }}
+        {{ form_widget(formCategory.title, {attr: {class:'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(formCategory.description,"Description", {"label_attr":{class : 'form-label'}}) }}
+        {{ form_errors(formCategory.description) }}
+        {{ form_widget(formCategory.description, {attr: {class:'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(formCategory.position,"Position", {"label_attr":{class : 'form-label'}}) }}
+        {{ form_errors(formCategory.position) }}
+        {{ form_widget(formCategory.position, {attr: {class:'form-control'}}) }}
+    </div>
+    {{ form_end(formCategory) }}
+
+{% endblock %}

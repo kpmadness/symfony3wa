@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Produits</title>
+</head>
+<body>
+    <h1>Les Produits</h1>
+    <ul>
+        {#{{ dump(products) }}#}
+    {% for product in products %}
+        {% if loop.first %}
+            <li>Ceci est le premier article<span><a href="{{ path('troiswa_back_product_info', { idprod: product.id }) }}">Plus d'info</a></span></li>
+        {% else %}
+            {% if loop.last %}
+                <li>{{ product.title | default('Produit 4 non défini') }}<br/>{{ product.description }}<span><a href="{{ path('troiswa_back_product_info', { idprod: product.id }) }}">Plus d'info</a></span></li>
+            {% else %}
+            <li>{{ product.title }}<br/>{{ product.description }}<br/><span><a href="{{ path('troiswa_back_product_info', { idprod: product.id }) }}">Plus d'info</a></span></li>
+            {% endif %}
+        {% endif %}
+
+    {% endfor %}
+    </ul>
+    <p>Le nombre d'articles est {{ products |length }}</p>
+
+    <ul>
+    {% for product in products | reverse %}
+        <li>{{ product.title }}<br/>{{ product.description }}</li>
+    {% endfor %}
+    </ul>
+
+    <ul>
+        {% for product in products | slice(1,2) %}
+            <li>{{ product.title }}<br/>{{ product.description }}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

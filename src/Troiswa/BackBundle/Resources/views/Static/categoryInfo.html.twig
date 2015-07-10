@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catégorie</title>
+</head>
+<body>
+    <a href="{{ path('troiswa_back_administration')}}">Accueil</a>
+    <a href="{{ path('troiswa_back_category')}}">Retour Liste Catégories</a>
+    <h1>Information de la catégorie {{ category.id }}</h1>
+    <ul>
+        <li>{{ category.title }}</li>
+        <li>{{ category.description | striptags }}</li>
+        <li>{{ category.date_created | date('d/m/Y') }}</li>
+        <li>{% if category.active %} la catégorie {{ category.id }} est active {% endif %}</li>
+    </ul>
+</body>
+</html>

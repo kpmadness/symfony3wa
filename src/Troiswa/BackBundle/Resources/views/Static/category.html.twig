@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Categories</title>
+</head>
+<body>
+    <h1>Les Categories</h1>
+    <ul>
+    {% for onecategory in category if onecategory.active %}
+         <li>{{ onecategory.title }} <br>
+             {{ onecategory.description | raw }}
+             <br/> Le nombre de caractères da la catégorie {{ onecategory.id }} est {{ onecategory.description | striptags | length  }}
+             <span><a href="{{ path('troiswa_back_category_info', { idcat: onecategory.id }) }}">Plus d'info</a></span>
+         </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
