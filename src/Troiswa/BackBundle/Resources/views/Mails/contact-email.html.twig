@@ -22,8 +22,13 @@
 
 <body>
 {% block body %}
-message test
+<ul>
+    {% for product in products %}
+        <li>{{ product.title }} </li>
+    {% endfor %}
+</ul>
 {% endblock %}
+
 {% block javascript %}
 
 {% endblock %}
