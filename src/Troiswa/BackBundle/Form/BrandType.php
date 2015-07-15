@@ -4,9 +4,10 @@ namespace Troiswa\BackBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CategoryType extends AbstractType
+class BrandType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,7 +18,18 @@ class CategoryType extends AbstractType
         $builder
             ->add("title","text")
             ->add("description","text")
-            ->add("position","integer")
+//            ->add('dateCreated', 'datetime',
+//                array(
+//                    'widget' => 'single_text',
+//                    'format' => 'yyyy/MM/dd HH:mm'
+//                )
+//            )
+//            ->add('dateUpdated', 'datetime',
+//                array(
+//                    'widget' => 'single_text',
+//                    'format' => 'yyyy/MM/dd HH:mm'
+//                )
+//            )
             ->add('products', 'entity',
                 [
                     'class' => "TroiswaBackBundle:Product",
@@ -27,7 +39,6 @@ class CategoryType extends AbstractType
                 ]
             )
             ->add('submit', 'submit');
-        ;
     }
     
     /**
@@ -36,7 +47,7 @@ class CategoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Troiswa\BackBundle\Entity\Category'
+            'data_class' => 'Troiswa\BackBundle\Entity\Brand'
         ));
     }
 
@@ -45,6 +56,6 @@ class CategoryType extends AbstractType
      */
     public function getName()
     {
-        return 'troiswa_backbundle_category';
+        return 'troiswa_backbundle_brand';
     }
 }

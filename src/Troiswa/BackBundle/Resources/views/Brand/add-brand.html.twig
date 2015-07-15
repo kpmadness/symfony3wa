@@ -1,0 +1,74 @@
+{% extends "TroiswaBackBundle::layout-admin.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("assets/css/plugins/morris.css", absolute=true) }}">
+    <link rel="stylesheet" href="{{ asset("assets/css/jquery.datetimepicker.css", absolute=true) }}">
+{% endblock %}
+
+{% block h1 %}
+    Gestion des Marques
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        <i class="fa fa-dashboard"></i>
+        {% if routePath=="troiswa_back_brand_add" %}
+        Ajouter une marque
+        {% else %}
+        Modifier une marque
+        {% endif %}
+    </li>
+{% endblock %}
+
+{% block sidebar_menu %}
+    <li class="active">
+        {% if routePath!="troiswa_back_administration" %}
+            <a href="{{ path('troiswa_back_administration') }}">
+                <i class="fa fa-fw fa-dashboard"></i> Accueil
+            </a>
+        {% else %}
+            <i class="fa fa-fw fa-dashboard"></i> Accueil
+        {% endif %}
+    </li>
+    <li class="active">
+        <a href="{{ path('troiswa_back_contact') }}">
+            <i class="fa fa-fw fa-dashboard"></i> Mes Marques
+        </a>
+    </li>
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(formBrand) }}
+    <div class="form-group">
+        {{ form_label(formBrand.title,"Titre", {"label_attr":{class : 'form-label'}}) }}
+        {{ form_errors(formBrand.title) }}
+        {{ form_widget(formBrand.title, {attr: {class:'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(formBrand.description,"Description", {"label_attr":{class : 'form-label'}}) }}
+        {{ form_errors(formBrand.description) }}
+        {{ form_widget(formBrand.description, {attr: {class:'form-control'}}) }}
+    </div>
+    {#<div class="form-group">#}
+        {#{{ form_label(formBrand.dateCreated,"Date de création", {"label_attr":{class : 'form-label'}}) }}#}
+        {#{{ form_errors(formBrand.dateCreated) }}#}
+        {#{{ form_widget(formBrand.dateCreated, { id: "datetimeCreate" , attr: {class:'form-control'}}) }}#}
+    {#</div>#}
+    {#<div class="form-group">#}
+        {#{{ form_label(formBrand.dateUpdated,"Date de modification", {"label_attr":{class : 'form-label'}}) }}#}
+        {#{{ form_errors(formBrand.dateUpdated) }}#}
+        {#{{ form_widget(formBrand.dateUpdated, { id: "datetimeUpdate" , attr: {class:'form-control'}}) }}#}
+    {#</div>#}
+    {{ form_end(formBrand) }}
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset("assets/js/jquery-ui.min.js", absolute=true) }}"></script>
+    <script src="{{ asset("assets/js/jquery.datetimepicker.js", absolute=true) }}"></script>
+    <script src="{{ asset('/assets/js/remove.js', absolute=true) }}"></script>
+{% endblock %}

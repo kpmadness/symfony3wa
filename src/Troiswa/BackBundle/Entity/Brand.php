@@ -3,18 +3,17 @@
 namespace Troiswa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Troiswa\BackBundle\Entity\Product;
-
 
 /**
- * Category
+ * Brand
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\BrandRepository")
  */
-class Category
+class Brand
 {
     /**
      * @var integer
@@ -28,7 +27,7 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=25)
+     * @ORM\Column(name="title", type="string", length=20)
      */
     private $title;
 
@@ -40,17 +39,31 @@ class Category
     private $description;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="position", type="integer")
+     * @ORM\Column(name="slug", type="string", length=128)
+     * @Gedmo\Slug(fields={"title"})
      */
-    private $position;
+    private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="categ")
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="dateCreated", type="datetime")
+     */
+    private $dateCreated;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="dateUpdated", type="datetime")
+     */
+    private $dateUpdated;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
      */
     protected $products;
-
 
     /**
      * Constructor
@@ -74,7 +87,7 @@ class Category
      * Set title
      *
      * @param string $title
-     * @return Category
+     * @return Brand
      */
     public function setTitle($title)
     {
@@ -97,7 +110,7 @@ class Category
      * Set description
      *
      * @param string $description
-     * @return Category
+     * @return Brand
      */
     public function setDescription($description)
     {
@@ -117,86 +130,83 @@ class Category
     }
 
     /**
-     * Set position
+     * Set slug
      *
-     * @param integer $position
-     * @return Category
+     * @param string $slug
+     * @return Brand
      */
-    public function setPosition($position)
+    public function setSlug($slug)
     {
-        $this->position = $position;
+        $this->slug = $slug;
 
         return $this;
     }
 
     /**
-     * Get position
+     * Get slug
      *
-     * @return integer 
+     * @return string 
      */
-    public function getPosition()
+    public function getSlug()
     {
-        return $this->position;
-    }
-
-
-    /**
-     *
-     * @Assert\True(message="Le titre de cette catégorie doit être 'Accueil'")
-     *
-     */
-    public function isCategoryValid()
-    {
-        if($this->position==0 && $this->title!="Accueil"){
-            return false;
-        }
+        return $this->slug;
     }
 
     /**
-     * @Assert\True(message="Le titre doit commencer par une majuscule")
+     * Set dateCreated
+     *
+     * @param \DateTime $dateCreated
+     * @return Brand
      */
-//    public function isTitle()
-//    {
-//
-//        if($this->title==ucfirst(strtolower($this->title))){
-//            return false;
-//        }
-//
-//        return true;
-//    }
-
-    /**
-     * @Assert\Callback()
-     */
-    public function validate(ExecutionContextInterface $context)
+    public function setDateCreated($dateCreated)
     {
+        $this->dateCreated = $dateCreated;
 
-        $titleConvert = ucfirst($this->title);
-
-        // check if the name is actually a fake name
-        if ($this->getTitle()!=$titleConvert) {
-            // If you're using the new 2.5 validation API (you probably are!)
-            $context->buildViolation('Votre titre "{{ value }}" ne commence pas par une majuscule !')
-                ->atPath('title')
-                ->setParameter("{{ value }}", $this->title)
-                ->addViolation();
-        }
-
-        return true;
+        return $this;
     }
 
+    /**
+     * Get dateCreated
+     *
+     * @return \DateTime 
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * Set dateUpdated
+     *
+     * @param \DateTime $dateUpdated
+     * @return Brand
+     */
+    public function setDateUpdated($dateUpdated)
+    {
+        $this->dateUpdated = $dateUpdated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateUpdated
+     *
+     * @return \DateTime 
+     */
+    public function getDateUpdated()
+    {
+        return $this->dateUpdated;
+    }
 
     /**
      * Add products
      *
      * @param \Troiswa\BackBundle\Entity\Product $products
-     * @return Category
+     * @return Brand
      */
     public function addProduct(\Troiswa\BackBundle\Entity\Product $products)
     {
-//        die("test");
         $this->products[] = $products;
-        $products->setCateg($this);
 
         return $this;
     }
@@ -209,7 +219,6 @@ class Category
     public function removeProduct(\Troiswa\BackBundle\Entity\Product $products)
     {
         $this->products->removeElement($products);
-        $products->setCateg(null);
     }
 
     /**
@@ -221,4 +230,31 @@ class Category
     {
         return $this->products;
     }
+
+    public function getLabelFormType()
+    {
+        return $this->title.' - '.$this->dateCreated->format('d/M/Y');
+    }
+
+    /**
+     * @Assert\Callback()
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+
+        // check if the name is actually a fake name
+        if ($this->title=="3wa") {
+            // If you're using the new 2.5 validation API (you probably are!)
+            $context->buildViolation('Cette marque {{ value }} ne peut être crée !')
+                ->atPath('title')
+                ->setParameter("{{ value }}", $this->title)
+                ->addViolation();
+        }
+
+        return true;
+    }
+
+
+
+
 }

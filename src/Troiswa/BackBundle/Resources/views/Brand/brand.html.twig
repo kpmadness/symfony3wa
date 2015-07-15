@@ -6,13 +6,13 @@
 {% endblock %}
 
 {% block h1 %}
-    Gestion des Catégories
+    Gestion des Marques
 {% endblock %}
 
 {% block breadcrumb %}
     {{ parent() }}
     <li>
-        <i class="fa fa-dashboard"></i> Liste des catégories
+        <i class="fa fa-dashboard"></i> Liste des marques
     </li>
 {% endblock %}
 
@@ -28,7 +28,7 @@
     </li>
     <li class="active">
         <a href="{{ path('troiswa_back_contact') }}">
-            <i class="fa fa-fw fa-dashboard"></i> Mes Catégories
+            <i class="fa fa-fw fa-dashboard"></i> Mes Marques
         </a>
     </li>
 {% endblock %}
@@ -36,38 +36,32 @@
 {% block content %}
     <div class="table-responsive">
         <p style="float:right">
-            <a href="{{ path('troiswa_back_category_add') }}" class="btn btn-primary">Créer une catégorie</a>
+            <a href="{{ path('troiswa_back_brand_add') }}" class="btn btn-primary">Créer une marque</a>
         </p>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
                 <th>Titre</th>
                 <th>Description</th>
-                <th>Position</th>
-                <th>Produits</th>
+                <th>Date de création</th>
+                <th>Date de modification</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             <input class="rubrique" type="hidden" value="{{ routePath }}"/>
-            {% for oneCategory in category %}
-                <tr>
-                    <td>{{ oneCategory.title }}</td>
-                    <td>{{ oneCategory.description }}</td>
-                    <td>{{ oneCategory.position }}</td>
-                    <td>
-                        <ul>
-                            {% for product in oneCategory.products %}
-                                <li>{{ product.title }}</li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                    <td>
-                        <a href="{{ path('troiswa_back_category_info', { idcat: oneCategory.id }) }}" class="btn btn-info">Voir</a>
-                        <a href="{{ path('troiswa_back_category_update', { idcat: oneCategory.id }) }}" class="btn btn-warning">Editer</a>
-                        <a href="{{ path('troiswa_back_category_delete', { idcat: oneCategory.id }) }}" class="btn btn-danger">Supprimer</a>
-                    </td>
-                </tr>
+            {% for oneBrand in brands %}
+            <tr>
+                <td>{{ oneBrand.title }}</td>
+                <td>{{ oneBrand.description }}</td>
+                <td>{{ oneBrand.dateCreated |date('d/m/Y') }}</td>
+                <td>{{ oneBrand.dateUpdated |date('d/m/Y') }}</td>
+                <td>
+                    <a href="{{ path('troiswa_back_brand_info', { idbrand: oneBrand.id }) }}" class="btn btn-info">Voir</a>
+                    <a href="{{ path('troiswa_back_brand_update', { idbrand: oneBrand.id }) }}" class="btn btn-warning">Editer</a>
+                    <a href="{{ path('troiswa_back_brand_delete', { idbrand: oneBrand.id }) }}" class="btn btn-danger">Supprimer</a>
+                </td>
+            </tr>
             {% endfor %}
             </tbody>
         </table>

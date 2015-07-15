@@ -45,6 +45,8 @@
                 <th>Description</th>
                 <th>Prix</th>
                 <th>Quantité</th>
+                <th>Catégorie</th>
+                <th>Marque</th>
                 <th>Publié</th>
                 <th>Actions</th>
             </tr>
@@ -57,6 +59,16 @@
                 <td>{{ oneProduct.description }}</td>
                 <td>{{ oneProduct.price }}</td>
                 <td>{{ oneProduct.quantity }}</td>
+                <td>
+                    {% if (oneProduct.categ != null) %}
+                        {{ oneProduct.categ.getTitle() }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if (oneProduct.brand != null) %}
+                        {{ oneProduct.brand.title }}
+                    {% endif %}
+                </td>
                 <td>
                     {% if oneProduct.active==1 %}
                         {% set enable=0 %}

@@ -1,0 +1,21 @@
+troiswa_back_brand:
+    path: /
+    defaults: { _controller:TroiswaBackBundle:Brand:displayBrand }
+
+troiswa_back_brand_info:
+    path: /information/{idbrand}
+    defaults: { _controller:TroiswaBackBundle:Brand:displayInfoBrand }
+
+troiswa_back_brand_add:
+    path: /add
+    defaults: { _controller:TroiswaBackBundle:Brand:addBrand }
+
+troiswa_back_brand_update:
+    path: /update/{idbrand}
+    defaults: { _controller:TroiswaBackBundle:Brand:updateBrand }
+
+troiswa_back_brand_delete:
+    path: /delete/{idbrand}
+    defaults: { _controller:TroiswaBackBundle:Brand:deleteBrand }
+
+

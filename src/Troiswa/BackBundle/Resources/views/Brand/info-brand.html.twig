@@ -1,0 +1,47 @@
+{% extends "TroiswaBackBundle::layout-admin.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("assets/css/plugins/morris.css", absolute=true) }}">
+{% endblock %}
+
+{% block h1 %}
+    Gestion des Marques
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        <i class="fa fa-dashboard"></i>  Information de la marque : {{ brand.title }}
+    </li>
+{% endblock %}
+
+{% block sidebar_menu %}
+    <li class="active">
+        {% if routePath!="troiswa_back_administration" %}
+            <a href="{{ path('troiswa_back_administration') }}">
+                <i class="fa fa-fw fa-dashboard"></i> Accueil
+            </a>
+        {% else %}
+            <i class="fa fa-fw fa-dashboard"></i> Accueil
+        {% endif %}
+    </li>
+    <li class="active">
+        <a href="{{ path('troiswa_back_contact') }}">
+            <i class="fa fa-fw fa-dashboard"></i> Mes Marques
+        </a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <ul>
+        <li>Marque : {{ brand.title }}</li>
+        <li>Description de la marque : {{ brand.description }}</li>
+        <li>Date de création : {{ brand.dateCreated |date('d/m/Y') }}</li>
+        <li>Date de modification : {{ brand.dateUpdated |date('d/m/Y') }}</li>
+    </ul>
+
+    <p>
+        <a href="{{ path('troiswa_back_brand') }}" class="btn btn-success">Retour</a>
+    </p>
+{% endblock %}

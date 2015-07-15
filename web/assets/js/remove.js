@@ -28,6 +28,8 @@ $(document).ready( function() {
     })
 
     $('#datetimepicker').datetimepicker();
+    $('#datetimeCreate').datetimepicker();
+    $('#datetimeUpdate').datetimepicker();
 
 });
 

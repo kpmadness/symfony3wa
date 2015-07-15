@@ -119,5 +119,4 @@ class CategoryController extends Controller
         return $this->render("TroiswaBackBundle:Category:subMenu-category.html.twig", ["category" => $category]);
     }
 
-
 }

@@ -41,6 +41,7 @@
 {% block content %}
 
     {{ form_start(formCategory) }}
+    {{ form_errors(formCategory) }}
     <div class="form-group">
         {{ form_label(formCategory.title,"Titre", {"label_attr":{class : 'form-label'}}) }}
         {{ form_errors(formCategory.title) }}

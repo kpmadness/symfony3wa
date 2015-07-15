@@ -53,14 +53,6 @@ class Category
 
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Get id
      *
      * @return integer 
@@ -183,42 +175,5 @@ class Category
         }
 
         return true;
-    }
-
-
-    /**
-     * Add products
-     *
-     * @param \Troiswa\BackBundle\Entity\Product $products
-     * @return Category
-     */
-    public function addProduct(\Troiswa\BackBundle\Entity\Product $products)
-    {
-//        die("test");
-        $this->products[] = $products;
-        $products->setCateg($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove products
-     *
-     * @param \Troiswa\BackBundle\Entity\Product $products
-     */
-    public function removeProduct(\Troiswa\BackBundle\Entity\Product $products)
-    {
-        $this->products->removeElement($products);
-        $products->setCateg(null);
-    }
-
-    /**
-     * Get products
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getProducts()
-    {
-        return $this->products;
     }
 }
