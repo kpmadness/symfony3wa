@@ -49,6 +49,7 @@ class ProductType extends AbstractType
 
                 ]
             )
+            ->add('cover', new ProductCoverType())
             ->add('submit', 'submit');
     }
     

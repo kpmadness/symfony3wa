@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Troiswa\BackBundle\Validator\Antibadwords;
 
 /**
  * Brand
@@ -33,7 +34,7 @@ class Brand
 
     /**
      * @var string
-     *
+     * @Antibadwords
      * @ORM\Column(name="description", type="string", length=200)
      */
     private $description;

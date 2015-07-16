@@ -43,6 +43,14 @@ class ProductController extends Controller
 
         if($formProduct->isValid()) {
             $em=$this->getDoctrine()->getManager();
+
+            $cover=$product->getCover();
+            $cover->setAlt($product->getTitle());
+            $cover->upload();
+
+            //die;
+
+            $em->persist($cover);
             $em->persist($product);
             $em->flush();
 
@@ -64,6 +72,9 @@ class ProductController extends Controller
         $product = $em->getRepository('TroiswaBackBundle:Product')
             ->find($idprod);
 
+//        dump($product);
+//        die();
+
         if(empty($product) or $product==null){
             throw $this->createNotFoundException("Le produit n'existe pas");
         }
@@ -74,6 +85,15 @@ class ProductController extends Controller
 
         if($formProduct->isValid()) {
             //$em = $this->getDoctrine()->getManager();
+
+//            $cover=$product->getCover();
+//            $cover->setAlt($product->getTitle());
+//            $cover->upload();
+
+            //die;
+
+            $em->persist($cover);
+
             $em->flush();
 
             // affichage du message du succès d'envoi du message
@@ -180,9 +200,5 @@ class ProductController extends Controller
 
         return $this->redirectToRoute("troiswa_back_product");
     }
-
-
-
-
 
 }

@@ -70,9 +70,17 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity="Troiswa\BackBundle\Entity\Brand", inversedBy="products")
-     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", nullable=false)
+     *
      */
     private $brand;
+
+    /**
+     * @ORM\OneToOne(targetEntity="ProductCover")
+     * @ORM\JoinColumn(name="product_cover_id", referencedColumnName="id")
+     * @Assert\Valid
+     */
+    private $cover;
 
 
     /**
@@ -223,13 +231,14 @@ class Product
         return $this->categ;
     }
 
+
     /**
      * Set brand
      *
      * @param \Troiswa\BackBundle\Entity\Brand $brand
      * @return Product
      */
-    public function setBrand(\Troiswa\BackBundle\Entity\Brand $brand = null)
+    public function setBrand(\Troiswa\BackBundle\Entity\Brand $brand)
     {
         $this->brand = $brand;
 
@@ -246,4 +255,26 @@ class Product
         return $this->brand;
     }
 
+    /**
+     * Set cover
+     *
+     * @param \Troiswa\BackBundle\Entity\ProductCover $cover
+     * @return Product
+     */
+    public function setCover(\Troiswa\BackBundle\Entity\ProductCover $cover = null)
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
+    /**
+     * Get cover
+     *
+     * @return \Troiswa\BackBundle\Entity\ProductCover 
+     */
+    public function getCover()
+    {
+        return $this->cover;
+    }
 }

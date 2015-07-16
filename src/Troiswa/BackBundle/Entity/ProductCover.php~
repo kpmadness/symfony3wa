@@ -1,0 +1,47 @@
+<?php
+
+namespace Troiswa\BackBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ProductCover
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\ProductCoverRepository")
+ */
+class ProductCover
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=30)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alt", type="string", length=50)
+     */
+    private $alt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="img-id", type="string", length=30)
+     */
+    private $img_id;
+
+
+   
+}

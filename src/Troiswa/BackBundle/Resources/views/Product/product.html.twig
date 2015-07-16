@@ -41,6 +41,7 @@
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
+                <th>Image</th>
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Prix</th>
@@ -55,6 +56,13 @@
             <input class="rubrique" type="hidden" value="{{ routePath }}"/>
             {% for oneProduct in products %}
             <tr>
+                <td align="center">
+                    {% if (oneProduct.cover != null) %}
+                        <img src="{{ asset(oneProduct.cover.getWebPath()) }}" alt="{{ oneProduct.cover.getAlt() }}" width="100" height="80"/>
+                    {% else %}
+                        <img src="{{ asset("upload/products/no-image.png") }}" alt="no-image" width="80" height="80"/>
+                    {% endif %}
+                </td>
                 <td>{{ oneProduct.title }}</td>
                 <td>{{ oneProduct.description }}</td>
                 <td>{{ oneProduct.price }}</td>
@@ -65,8 +73,8 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% if (oneProduct.brand != null) %}
-                        {{ oneProduct.brand.title }}
+                    {% if (oneProduct.brand.getId() != null) %}
+                        {{ oneProduct.brand.getTitle() }}
                     {% endif %}
                 </td>
                 <td>

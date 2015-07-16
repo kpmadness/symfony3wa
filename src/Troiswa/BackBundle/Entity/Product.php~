@@ -70,9 +70,16 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity="Troiswa\BackBundle\Entity\Brand", inversedBy="products")
-     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", nullable=false)
+     *
      */
     private $brand;
+
+    /**
+     * @ORM\OneToOne(targetEntity="ProductCover")
+     * @ORM\JoinColumn(name="product_cover_id", referencedColumnName="id")
+     */
+    private $cover;
 
 
     /**
@@ -221,5 +228,29 @@ class Product
     public function getCateg()
     {
         return $this->categ;
+    }
+
+
+    /**
+     * Set brand
+     *
+     * @param \Troiswa\BackBundle\Entity\Brand $brand
+     * @return Product
+     */
+    public function setBrand(\Troiswa\BackBundle\Entity\Brand $brand)
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    /**
+     * Get brand
+     *
+     * @return \Troiswa\BackBundle\Entity\Brand 
+     */
+    public function getBrand()
+    {
+        return $this->brand;
     }
 }
