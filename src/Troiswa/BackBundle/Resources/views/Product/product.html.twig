@@ -58,7 +58,7 @@
             <tr>
                 <td align="center">
                     {% if (oneProduct.cover != null) %}
-                        <img src="{{ asset(oneProduct.cover.getWebPath()) }}" alt="{{ oneProduct.cover.getAlt() }}" width="100" height="80"/>
+                        <img src="{{ asset(oneProduct.cover.getWebPath("small")) }}" alt="{{ oneProduct.cover.getAlt() }}" width="100" height="80"/>
                     {% else %}
                         <img src="{{ asset("upload/products/no-image.png") }}" alt="no-image" width="80" height="80"/>
                     {% endif %}

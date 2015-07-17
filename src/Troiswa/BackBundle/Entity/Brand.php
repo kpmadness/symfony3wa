@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Troiswa\BackBundle\Validator\Antibadwords;
+use Troiswa\BackBundle\Validator\Antibadwords as Antibadwords;
 
 /**
  * Brand
@@ -65,6 +65,13 @@ class Brand
      * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
      */
     protected $products;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Logo")
+     * @ORM\JoinColumn(name="logo_id", referencedColumnName="id")
+     * @Assert\Valid
+     */
+    private $logo;
 
     /**
      * Constructor
@@ -200,6 +207,29 @@ class Brand
     }
 
     /**
+     * Set logo
+     *
+     * @param \Troiswa\BackBundle\Entity\Logo $logo
+     * @return Brand
+     */
+    public function setLogo(\Troiswa\BackBundle\Entity\Logo $logo = null)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return \Troiswa\BackBundle\Entity\Logo
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
      * Add products
      *
      * @param \Troiswa\BackBundle\Entity\Product $products
@@ -254,8 +284,6 @@ class Brand
 
         return true;
     }
-
-
 
 
 }

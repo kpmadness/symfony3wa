@@ -39,6 +39,11 @@ troiswa_back_resource_brand:
     resource: "@TroiswaBackBundle/Resources/config/routing/brand.yml"
     prefix:   /brand
 
+troiswa_back_resource_logo:
+    resource: "@TroiswaBackBundle/Resources/config/routing/logo.yml"
+    prefix:   /logo
+
+
 
 
 

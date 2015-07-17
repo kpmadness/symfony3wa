@@ -1,0 +1,21 @@
+troiswa_back_logo:
+    path: /
+    defaults: { _controller:TroiswaBackBundle:Logo:displayLogo }
+
+troiswa_back_logo_info:
+    path: /information/{idlogo}
+    defaults: { _controller:TroiswaBackBundle:Brand:displayInfoLogo }
+
+troiswa_back_logo_add:
+    path: /add
+    defaults: { _controller:TroiswaBackBundle:Logo:addLogo }
+
+troiswa_back_logo_update:
+    path: /update/{idlogo}
+    defaults: { _controller:TroiswaBackBundle:Logo:updateLogo }
+
+troiswa_back_logo_delete:
+    path: /delete/{idlogo}
+    defaults: { _controller:TroiswaBackBundle:Logo:deleteLogo }
+
+

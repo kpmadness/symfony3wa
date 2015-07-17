@@ -76,7 +76,7 @@ class Product
     private $brand;
 
     /**
-     * @ORM\OneToOne(targetEntity="ProductCover")
+     * @ORM\OneToOne(targetEntity="ProductCover", cascade={"persist"})
      * @ORM\JoinColumn(name="product_cover_id", referencedColumnName="id")
      * @Assert\Valid
      */

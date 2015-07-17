@@ -40,6 +40,13 @@ class BrandController extends Controller
 
         if($formBrand->isValid()) {
             $em=$this->getDoctrine()->getManager();
+
+            $logo=$brand->getLogo();
+            $logo->setName($brand->getTitle());
+            $logo->setAlt($brand->getTitle());
+            $logo->upload();
+
+            $em->persist($logo);
             $em->persist($brand);
             $em->flush();
 

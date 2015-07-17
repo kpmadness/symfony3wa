@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="product_cover")
  * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\ProductCoverRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class ProductCover
 {
@@ -45,12 +46,17 @@ class ProductCover
      */
     private $file;
 
-   
+    private $oldFile;
+
+    private $thumbnails = array("thumb-small" => array(100, 50),
+                                "thumb-medium" => array(200, 100),
+                                "thumb-large" => array(400, 200));
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -73,7 +79,7 @@ class ProductCover
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -96,7 +102,7 @@ class ProductCover
     /**
      * Get alt
      *
-     * @return string 
+     * @return string
      */
     public function getAlt()
     {
@@ -107,9 +113,21 @@ class ProductCover
      * Set file
      *
      */
-    public function setFile(UploadedFile $file=null)
+    public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
+
+        // Test si j'ai déjà une image
+        if ($this->name)
+        {
+            // J'ajoute dans oldFichier l'ancienne image
+            $this->oldFile = $this->name;
+
+            // Ajout de la ligne ci-dessous si l'on modifie uniquement l'image du produit
+            // Modification du nom afin que doctrine lance le PreUpdate et le PostUpdate
+            //$this->name = null;
+        }
+
 
         return $this;
     }
@@ -123,46 +141,84 @@ class ProductCover
         return $this->file;
     }
 
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        // Permet d'insérer un nom d'image au moment de la sauvegarde en BDD
+        // Création d'un nom unique d'image
+        $extension = $this->file->guessExtension();
+        $this->name = str_replace(' ', '-', $this->alt) . uniqid().'.'.$extension;
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
     public function upload()
     {
-        if(null==$this->file){
+        if (null == $this->file) {
             return;
         }
 
-        $extension = $this->file->guessExtension();
+        // Suppression des anciennes images
+        if ($this->oldFile)
+        {
+            // suppression de l'image principale
+            unlink($this->getUploadRootDir() . '/' . $this->oldFile);
 
-//        $nameImage=$this->file->getClientOriginalName();
+            // suppression des thumbnails
+            foreach ($this->thumbnails as $key => $thumbnail)
+            {
+                unlink($this->getUploadRootDir() . '/' . $key . '-' . $this->oldFile);
+            }
 
-        $nameImage=$this->alt."-".uniqid().".".$extension;
+        }
 
-        $this->file->move($this->getUploadRootDir(), $nameImage);
 
-        $this->name=$nameImage;
+        $this->file->move($this->getUploadRootDir(), $this->name);
+
+        $imagine = new \Imagine\Gd\Imagine();
+        $imagineOpen = $imagine->open($this->getAbsolutePath());
 
         // Création des thumbnails
-        $imagine = new \Imagine\Gd\Imagine();
-        $imagine
-            ->open($this->getAbsolutePath())
-            ->thumbnail(new \Imagine\Image\Box(350, 160))
-            ->save($this->getAbsolutePath().'-thumb-small.'.$extension);
+        foreach ($this->thumbnails as $key => $value) {
 
+            $imagineOpen->thumbnail(new \Imagine\Image\Box($value[0], $value[1]))
+                        ->save($this->getUploadRootDir() . '/' . $key . '-' . $this->name);
+
+        }
 
     }
 
     private function getUploadRootDir()
     {
-        return __DIR__."/../../../../web/upload/products";
+        return __DIR__ . "/../../../../web/" . $this->getUploadDir();
     }
 
-    public function getWebPath()
+
+    public function getWebPath($size = null)
     {
-        return "upload/products/".$this->name;
+        if (array_key_exists("thumb-" . $size, $this->thumbnails)) {
+            return $this->getUploadDir() . '/thumb-' . $size . '-' . $this->name;
+        } else {
+            return $this->getUploadDir() . '/' . $this->name;
+
+
+        }
     }
 
     public function getAbsolutePath()
     {
-        return $this->getUploadRootDir().'/'.$this->name;
+        return $this->getUploadRootDir() . '/' . $this->name;
     }
 
+    public function getUploadDir()
+    {
+        return "upload/products";
+
+    }
 
 }

@@ -38,6 +38,7 @@ class BrandType extends AbstractType
                     'by_reference' => false
                 ]
             )
+            ->add('logo',new LogoType())
             ->add('submit', 'submit');
     }
     

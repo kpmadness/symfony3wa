@@ -3,6 +3,10 @@
 namespace Troiswa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Troiswa\BackBundle\Validator\Antibadwords;
 
 /**
  * Brand
@@ -30,7 +34,7 @@ class Brand
 
     /**
      * @var string
-     *
+     * @Antibadwords
      * @ORM\Column(name="description", type="string", length=200)
      */
     private $description;
@@ -39,19 +43,20 @@ class Brand
      * @var string
      *
      * @ORM\Column(name="slug", type="string", length=128)
+     * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
 
     /**
      * @var \DateTime
-     *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="dateCreated", type="datetime")
      */
     private $dateCreated;
 
     /**
      * @var \DateTime
-     *
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="dateUpdated", type="datetime")
      */
     private $dateUpdated;
@@ -61,6 +66,19 @@ class Brand
      */
     protected $products;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Logo")
+     * @ORM\JoinColumn(name="logo_id", referencedColumnName="id")
+     */
+    private $logo;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -186,4 +204,64 @@ class Brand
     {
         return $this->dateUpdated;
     }
+
+    /**
+     * Add products
+     *
+     * @param \Troiswa\BackBundle\Entity\Product $products
+     * @return Brand
+     */
+    public function addProduct(\Troiswa\BackBundle\Entity\Product $products)
+    {
+        $this->products[] = $products;
+
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \Troiswa\BackBundle\Entity\Product $products
+     */
+    public function removeProduct(\Troiswa\BackBundle\Entity\Product $products)
+    {
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    public function getLabelFormType()
+    {
+        return $this->title.' - '.$this->dateCreated->format('d/M/Y');
+    }
+
+    /**
+     * @Assert\Callback()
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+
+        // check if the name is actually a fake name
+        if ($this->title=="3wa") {
+            // If you're using the new 2.5 validation API (you probably are!)
+            $context->buildViolation('Cette marque {{ value }} ne peut être crée !')
+                ->atPath('title')
+                ->setParameter("{{ value }}", $this->title)
+                ->addViolation();
+        }
+
+        return true;
+    }
+
+
+
+
 }

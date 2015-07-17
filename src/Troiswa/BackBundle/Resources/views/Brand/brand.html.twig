@@ -41,6 +41,7 @@
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
+                <th>Logo</th>
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Date de création</th>
@@ -52,6 +53,16 @@
             <input class="rubrique" type="hidden" value="{{ routePath }}"/>
             {% for oneBrand in brands %}
             <tr>
+                <td align="center">
+                    {% if (oneBrand.logo != null) %}
+                        <figure>
+                            <img src="{{ asset(oneBrand.logo.getWebPath('small')) }}" alt="{{ oneBrand.logo.getAlt() }}" width="70" height="30"/>
+                            <figcaption>{{ oneBrand.logo.legend }}</figcaption>
+                        </figure>
+                    {% else %}
+                        <img src="{{ asset("upload/logos/no-image.png") }}" alt="no-image" width="80" height="80"/>
+                    {% endif %}
+                </td>
                 <td>{{ oneBrand.title }}</td>
                 <td>{{ oneBrand.description }}</td>
                 <td>{{ oneBrand.dateCreated |date('d/m/Y') }}</td>

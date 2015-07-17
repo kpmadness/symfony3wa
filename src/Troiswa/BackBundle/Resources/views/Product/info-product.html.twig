@@ -35,6 +35,13 @@
 
 {% block content %}
     <ul>
+        <li>
+            {% if (product.cover != null) %}
+                <img src="{{ asset(product.cover.getWebPath("small")) }}" alt="{{ product.cover.getAlt() }}" width="100" height="80"/>
+            {% else %}
+                <img src="{{ asset("upload/products/no-image.png") }}" alt="no-image" width="80" height="80"/>
+            {% endif %}
+        </li>
         <li>Produit : {{ product.title }}</li>
         <li>Description du produit : {{ product.description }}</li>
         <li>Quantité : {{ product.quantity }}</li>
