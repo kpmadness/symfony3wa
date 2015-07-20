@@ -12,7 +12,7 @@ use Troiswa\BackBundle\Validator\Antibadwords as Antibadwords;
  * Brand
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\BrandRepository")
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\BrandRepository")
  */
 class Brand
 {

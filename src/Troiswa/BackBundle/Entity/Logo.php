@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Logo
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\LogoRepository")
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\LogoRepository")
  */
 class Logo
 {

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ProductCover
  *
  * @ORM\Table(name="product_cover")
- * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\ProductCoverRepository")
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\ProductCoverRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class ProductCover
