@@ -3,16 +3,29 @@
 namespace Troiswa\BackBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Troiswa\BackBundle\Entity\User;
+
 //use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends Controller
 {
     public function indexAction()
     {
+
+//        $user = new User();
+//        $factory = $this->get('security.encoder_factory');
+//
+//        $encoder = $factory->getEncoder($user);
+//        $password = $encoder->encodePassword('admin', null);
+//        echo $password;
+//        die;
+
         //dump($request->query->get("page","default"));
         //die('ok');
         return $this->render("TroiswaBackBundle:Main:index.html.twig");
         //return $this->render('TroiswaBackBundle:Default:index.html.twig', array('name' => $name));
+
+
     }
 
     public function  displayTitleProductAction()
@@ -83,4 +96,5 @@ class MainController extends Controller
 
 
     }
+
 }

@@ -4,18 +4,23 @@ namespace Troiswa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Troiswa\BackBundle\Validator\TelValid as TelValid;
 use Troiswa\BackBundle\Validator\PasswordCheck as PasswordCheck;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\UserRepository")
+ * @UniqueEntity("mail")
+ * @UniqueEntity("pseudo")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer
@@ -43,7 +48,7 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=255)
+     * @ORM\Column(name="mail", type="string", length=255, unique=true)
      */
     private $mail;
 
@@ -65,7 +70,7 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="pseudo", type="string", length=255)
+     * @ORM\Column(name="pseudo", type="string", length=255, unique=true)
      */
     private $pseudo;
 
@@ -84,6 +89,28 @@ class User
      */
     private $birthdate;
 
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="username", type="string", length=100)
+//     */
+//    private $username;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="UserCoupon", mappedBy="user")
+     *
+     */
+    private $coupon;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->coupon = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -302,5 +329,93 @@ class User
         }
 
         return true;
+    }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return Role[] The user roles
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+
+    /**
+     * Add coupon
+     *
+     * @param \Troiswa\BackBundle\Entity\UserCoupon $coupon
+     * @return User
+     */
+    public function addCoupon(\Troiswa\BackBundle\Entity\UserCoupon $coupon)
+    {
+        $this->coupon[] = $coupon;
+
+        return $this;
+    }
+
+    /**
+     * Remove coupon
+     *
+     * @param \Troiswa\BackBundle\Entity\UserCoupon $coupon
+     */
+    public function removeCoupon(\Troiswa\BackBundle\Entity\UserCoupon $coupon)
+    {
+        $this->coupon->removeElement($coupon);
+    }
+
+    /**
+     * Get coupon
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCoupon()
+    {
+        return $this->coupon;
     }
 }

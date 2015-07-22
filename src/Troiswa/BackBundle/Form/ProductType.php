@@ -36,20 +36,24 @@ class ProductType extends AbstractType
             ->add("price","text")
             ->add("quantity","integer")
             ->add('categ','entity',
-                    [
-                        'class' => 'TroiswaBackBundle:Category',
-                        'property' => 'title'
-
-                    ]
+                [
+                    'class' => 'TroiswaBackBundle:Category',
+                    'property' => 'title'
+                ]
             )
             ->add('brand','entity',
                 [
                     'class' => 'TroiswaBackBundle:Brand',
                     'property' => 'labelFormType'
-
                 ]
             )
             ->add('cover', new ProductCoverType())
+            ->add('tag','entity',
+                [
+                    'class' => 'TroiswaBackBundle:Tag',
+                    'property' => 'tag'
+                ]
+            )
             ->add('submit', 'submit');
     }
     

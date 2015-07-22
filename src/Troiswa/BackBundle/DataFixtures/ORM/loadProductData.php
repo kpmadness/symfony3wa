@@ -17,23 +17,23 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
         //php app/console doctrine:fixtures:load
         //php app/console doctrine:fixtures:load --append
 
-        $product = new Product();
-        $product->setTitle('Caméscope');
-        $product->setDescription('caméscope CANON ultra-design - top de la technologie');
-        $product->setPrice(499);
-        $product->setQuantity(15);
-        $product->setActive(1);
-
-
-        //$product->setCateg($this->getReference('refcat'));
-        $product->setBrand($this->getReference('refbd'));
-
-        $manager->persist($product);
-        $manager->flush();
+//        $product = new Product();
+//        $product->setTitle('Caméscope');
+//        $product->setDescription('caméscope CANON ultra-design - top de la technologie');
+//        $product->setPrice(499);
+//        $product->setQuantity(15);
+//        $product->setActive(1);
+//
+//
+//        //$product->setCateg($this->getReference('refcat'));
+//        $product->setBrand($this->getReference('refbd'));
+//
+//        $manager->persist($product);
+//        $manager->flush();
     }
 
     public function getOrder()
     {
-        return 2;
+//        return 2;
     }
 }

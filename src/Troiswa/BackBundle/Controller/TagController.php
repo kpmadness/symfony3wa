@@ -5,76 +5,65 @@ namespace Troiswa\BackBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Troiswa\BackBundle\Entity\User;
-use Troiswa\BackBundle\Form\UserType;
+use Troiswa\BackBundle\Entity\Tag;
+use Troiswa\BackBundle\Form\TagType;
 
 /**
- * User controller.
+ * Tag controller.
  *
  */
-class UserController extends Controller
+class TagController extends Controller
 {
 
     /**
-     * Lists all User entities.
+     * Lists all Tag entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TroiswaBackBundle:User')->findAll();
+        $entities = $em->getRepository('TroiswaBackBundle:Tag')->findAll();
 
-        return $this->render('TroiswaBackBundle:User:index.html.twig', array(
+        return $this->render('TroiswaBackBundle:Tag:tag.html.twig', array(
             'entities' => $entities,
         ));
     }
     /**
-     * Creates a new User entity.
+     * Creates a new Tag entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new User();
+        $entity = new Tag();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-
             $em = $this->getDoctrine()->getManager();
-
-
-            $factory = $this->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($entity);
-
-
-            $passEncrypt = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
-            $entity->setPassword($passEncrypt);
-//            dump($entity);
-//            die();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('troiswa_back_user_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('tag_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('TroiswaBackBundle:User:new.html.twig', array(
+        return $this->render('TroiswaBackBundle:Tag:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a User entity.
+     * Creates a form to create a Tag entity.
      *
-     * @param User $entity The entity
+     * @param Tag $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(User $entity)
+    private function createCreateForm(Tag $entity)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('troiswa_back_user_create'),
+        $form = $this->createForm(new TagType(), $entity, array(
+            'action' => $this->generateUrl('tag_create'),
             'method' => 'POST',
         ));
 
@@ -84,60 +73,60 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a form to create a new User entity.
+     * Displays a form to create a new Tag entity.
      *
      */
     public function newAction()
     {
-        $entity = new User();
+        $entity = new Tag();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('TroiswaBackBundle:User:new.html.twig', array(
+        return $this->render('TroiswaBackBundle:Tag:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a User entity.
+     * Finds and displays a Tag entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroiswaBackBundle:User')->find($id);
+        $entity = $em->getRepository('TroiswaBackBundle:Tag')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Tag entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('TroiswaBackBundle:User:show.html.twig', array(
+        return $this->render('TroiswaBackBundle:Tag:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing User entity.
+     * Displays a form to edit an existing Tag entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroiswaBackBundle:User')->find($id);
+        $entity = $em->getRepository('TroiswaBackBundle:Tag')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Tag entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('TroiswaBackBundle:User:edit.html.twig', array(
+        return $this->render('TroiswaBackBundle:Tag:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -145,16 +134,16 @@ class UserController extends Controller
     }
 
     /**
-    * Creates a form to edit a User entity.
+    * Creates a form to edit a Tag entity.
     *
-    * @param User $entity The entity
+    * @param Tag $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(User $entity)
+    private function createEditForm(Tag $entity)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('troiswa_back_user_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new TagType(), $entity, array(
+            'action' => $this->generateUrl('tag_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -163,17 +152,17 @@ class UserController extends Controller
         return $form;
     }
     /**
-     * Edits an existing User entity.
+     * Edits an existing Tag entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroiswaBackBundle:User')->find($id);
+        $entity = $em->getRepository('TroiswaBackBundle:Tag')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Tag entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -183,17 +172,17 @@ class UserController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('troiswa_back_user_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('tag_edit', array('id' => $id)));
         }
 
-        return $this->render('TroiswaBackBundle:User:edit.html.twig', array(
+        return $this->render('TroiswaBackBundle:Tag:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
-     * Deletes a User entity.
+     * Deletes a Tag entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -203,21 +192,21 @@ class UserController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TroiswaBackBundle:User')->find($id);
+            $entity = $em->getRepository('TroiswaBackBundle:Tag')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
+                throw $this->createNotFoundException('Unable to find Tag entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('troiswa_back_user'));
+        return $this->redirect($this->generateUrl('tag'));
     }
 
     /**
-     * Creates a form to delete a User entity by id.
+     * Creates a form to delete a Tag entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -226,7 +215,7 @@ class UserController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('troiswa_back_user_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('tag_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

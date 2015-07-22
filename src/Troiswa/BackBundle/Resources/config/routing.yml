@@ -1,3 +1,7 @@
+troiswa_back_tag:
+    resource: "@TroiswaBackBundle/Resources/config/routing/tag.yml"
+    prefix:   /tag
+
 troiswa_back_user:
     resource: "@TroiswaBackBundle/Resources/config/routing/user.yml"
     prefix:   /user
@@ -8,7 +12,7 @@ troiswa_back_user:
 
 
 troiswa_back_administration:
-    path: /admin
+    path: /
     defaults: { _controller:TroiswaBackBundle:Main:index }
 
 troiswa_back_cgv:
@@ -47,7 +51,19 @@ troiswa_back_resource_logo:
     resource: "@TroiswaBackBundle/Resources/config/routing/logo.yml"
     prefix:   /logo
 
+troiswa_back_resource_tag:
+    resource: "@TroiswaBackBundle/Resources/config/routing/tag.yml"
+    prefix:   /tag
 
+troiswa_back_login:
+    pattern:   /login
+    defaults:  { _controller: TroiswaBackBundle:Security:login }
+
+troiswa_back_login_check:
+    pattern:   /login_check
+
+troiswa_back_logout:
+    pattern:   /logout
 
 
 

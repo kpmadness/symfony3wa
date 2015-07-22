@@ -1,0 +1,69 @@
+{% extends "TroiswaBackBundle::layout-admin.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("assets/css/plugins/morris.css", absolute=true) }}">
+{% endblock %}
+
+{% block h1 %}
+    Gestion des Tags
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        <i class="fa fa-dashboard"></i> Liste des Tags
+    </li>
+{% endblock %}
+
+{% block sidebar_menu %}
+    <li class="active">
+        {% if routePath!="troiswa_back_administration" %}
+            <a href="{{ path('troiswa_back_administration') }}">
+                <i class="fa fa-fw fa-dashboard"></i> Accueil
+            </a>
+        {% else %}
+            <i class="fa fa-fw fa-dashboard"></i> Accueil
+        {% endif %}
+    </li>
+    <li class="active">
+        <a href="{{ path('troiswa_back_contact') }}">
+            <i class="fa fa-fw fa-dashboard"></i> Mes Tags
+        </a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="table-responsive">
+        <p style="float:right">
+            <a href="{{ path('troiswa_back_tag_new') }}" class="btn btn-primary">Créer un tag</a>
+        </p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tag</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('troiswa_back_tag_show', { 'idtag': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.tag }}</td>
+                    <td>
+                        <a href="{{ path('troiswa_back_tag_show', { 'idtag': entity.id }) }}" class="btn btn-info">Voir</a>
+                        <a href="{{ path('troiswa_back_tag_edit', { 'idtag': entity.id }) }}" class="btn btn-warning">Editer</a>
+                        <a href="{{ path('troiswa_back_tag_delete', { 'idtag': entity.id }) }}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('/assets/js/remove.js', absolute=true) }}"></script>
+{% endblock %}

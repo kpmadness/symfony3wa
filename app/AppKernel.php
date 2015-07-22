@@ -21,7 +21,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         );
 
-        if (in_array($this->getEnvironment(), array('dev', 'test','prod'))) {
+        if (in_array($this->getEnvironment(), array('dev', 'test','prod', 'benchmark'))) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();

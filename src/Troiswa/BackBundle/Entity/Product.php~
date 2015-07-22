@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\ProductRepository")
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\ProductRepository")
  * @ORM\Table(name="product")
  */
 class Product
@@ -76,10 +76,26 @@ class Product
     private $brand;
 
     /**
-     * @ORM\OneToOne(targetEntity="ProductCover")
+     * @ORM\OneToOne(targetEntity="ProductCover", cascade={"persist"})
      * @ORM\JoinColumn(name="product_cover_id", referencedColumnName="id")
+     * @Assert\Valid
      */
     private $cover;
+
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="Troiswa\BackBundle\Entity\Tag")
+     * @ORM\JoinTable(name="product_tag",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     *   }
+     * )
+     *
+     */
+    private $tag;
 
 
     /**
@@ -252,5 +268,28 @@ class Product
     public function getBrand()
     {
         return $this->brand;
+    }
+
+    /**
+     * Set cover
+     *
+     * @param \Troiswa\BackBundle\Entity\ProductCover $cover
+     * @return Product
+     */
+    public function setCover(\Troiswa\BackBundle\Entity\ProductCover $cover = null)
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
+    /**
+     * Get cover
+     *
+     * @return \Troiswa\BackBundle\Entity\ProductCover 
+     */
+    public function getCover()
+    {
+        return $this->cover;
     }
 }

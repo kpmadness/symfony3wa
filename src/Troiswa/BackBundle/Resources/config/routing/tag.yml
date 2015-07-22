@@ -1,0 +1,30 @@
+troiswa_back_tag:
+    path:     /
+    defaults: { _controller: "TroiswaBackBundle:Tag:index" }
+
+troiswa_back_tag_show:
+    path:     /{idtag}/show
+    defaults: { _controller: "TroiswaBackBundle:Tag:show" }
+
+troiswa_back_tag_new:
+    path:     /new
+    defaults: { _controller: "TroiswaBackBundle:Tag:new" }
+
+troiswa_back_tag_create:
+    path:     /create
+    defaults: { _controller: "TroiswaBackBundle:Tag:create" }
+    methods:  POST
+
+troiswa_back_tag_edit:
+    path:     /{idtag}/edit
+    defaults: { _controller: "TroiswaBackBundle:Tag:edit" }
+
+troiswa_back_tag_update:
+    path:     /{idtag}/update
+    defaults: { _controller: "TroiswaBackBundle:Tag:update" }
+    methods:  [POST, PUT]
+
+troiswa_back_tag_delete:
+    path:     /{idtag}/delete
+    defaults: { _controller: "TroiswaBackBundle:Tag:delete" }
+    methods:  [POST, DELETE]

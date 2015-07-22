@@ -3,14 +3,24 @@
 namespace Troiswa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Troiswa\BackBundle\Validator\TelValid as TelValid;
+use Troiswa\BackBundle\Validator\PasswordCheck as PasswordCheck;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\UserRepository")
+ * @UniqueEntity("mail")
+ * @UniqueEntity("pseudo")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer
@@ -38,14 +48,15 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=255)
+     * @ORM\Column(name="mail", type="string", length=255, unique=true)
      */
     private $mail;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="phone", type="string", length=255)
+     * @TelValid
+     *
      */
     private $phone;
 
@@ -59,14 +70,15 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="pseudo", type="string", length=255)
+     * @ORM\Column(name="pseudo", type="string", length=255, unique=true)
      */
     private $pseudo;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="password", type="string", length=255)
+     * @PasswordCheck
+     *
      */
     private $password;
 
@@ -76,6 +88,20 @@ class User
      * @ORM\Column(name="birth_date", type="date")
      */
     private $birthdate;
+
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="username", type="string", length=100)
+//     */
+//    private $username;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="UserCoupon", mappedBy="user")
+     *
+     */
+    private $coupon;
 
 
     /**
@@ -247,5 +273,107 @@ class User
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Set birthdate
+     *
+     * @param \DateTime $birthdate
+     * @return User
+     */
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    /**
+     * Get birthdate
+     *
+     * @return \DateTime 
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+
+    /**
+     * @Assert\Callback()
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+
+        // check if the name is actually a fake name
+        if ($this->pseudo=="admin") {
+            $context->buildViolation('Le pseudo "{{ value }}" n\'est pas possible !')
+                ->atPath('pseudo')
+                ->setParameter("{{ value }}", $this->pseudo)
+                ->addViolation();
+        }
+
+        if ($this->password=="admin") {
+            $context->buildViolation('Le mot de passe saisi : "{{ value }}" n\'est pas valide!')
+                ->atPath('password')
+                ->setParameter("{{ value }}", $this->password)
+                ->addViolation();
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return Role[] The user roles
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

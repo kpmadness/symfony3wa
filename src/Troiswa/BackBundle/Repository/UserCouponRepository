@@ -1,0 +1,22 @@
+<?php
+
+
+namespace Troiswa\BackBundle\Repository;
+
+use Doctrine\ORM\EntityRepository;
+
+
+
+
+/**
+ * UserCouponRepository
+ *
+ */
+class UserCouponRepository extends EntityRepository
+{
+
+
+
+
+
+}

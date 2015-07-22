@@ -12,7 +12,7 @@ class PasswordCheckValidator extends ConstraintValidator
 
         $pattern='#^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$#';
 
-        if($value!="admin" && preg_match($pattern, $value)==false){
+        if($value!="admin" && (preg_match($pattern, $value)==false)){
             $this->context->addViolation($constraint->message);
         }
 

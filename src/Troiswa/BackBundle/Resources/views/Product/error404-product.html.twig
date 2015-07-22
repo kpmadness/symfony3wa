@@ -1,0 +1,13 @@
+<h1>Erreur 404</h1>
+<h2>Attention, la page de ce produit n'existe pas.</h2>
+
+<div>
+    Something is broken. Please let us know what you were doing when this error occurred.
+    We will fix it as soon as possible. Sorry for any inconvenience caused.
+</div>
+
+<ul>
+{% for prod in product %}
+    <li>{{ prod.title }}</li>
+{% endfor %}
+</ul>

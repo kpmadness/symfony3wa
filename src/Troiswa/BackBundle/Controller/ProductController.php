@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\Tests\Normalizer\PropertyDummy;
 use Symfony\Component\HttpFoundation\Request;
 use Troiswa\BackBundle\Form\ProductType;
 use Troiswa\BackBundle\Entity\Product;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ProductController extends Controller
 {
@@ -27,6 +27,13 @@ class ProductController extends Controller
 
     public function addProductAction(Request $request)
     {
+
+        // lève une exception sur l'accès à une page en fonction du rôle
+//        if (!$this->get('security.context')->isGranted('ROLE_ADMIN'))
+//        {
+//            throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à cette page');
+//        }
+
         $product=new Product();
 
         //$formProduct = $this->createForm(new ProductType(), null , array("attr" => array("novalidate" => "novalidate")));
@@ -63,7 +70,10 @@ class ProductController extends Controller
         return $this->render("TroiswaBackBundle:Product:add-product.html.twig",array("formProduct" =>$formProduct->createView()));
     }
 
-
+    /**
+     *
+     */
+// @Security("has_role('ROLE_ADMIN')")
     public function updateProductAction($idprod, Request $request)
     {
         $em=$this->getDoctrine()->getManager();
@@ -195,6 +205,20 @@ class ProductController extends Controller
         $em->flush();
 
         return $this->redirectToRoute("troiswa_back_product");
+    }
+
+    public function displayErrorProductAction()
+    {
+
+        $em=$this->getDoctrine()->getManager();
+
+        $product=$em->getRepository('TroiswaBackBundle:Product')
+            ->findBy(array(),array('title' => 'ASC','price' => 'ASC'));
+
+//        dump($category);
+//        die();
+
+        return $this->render("TroiswaBackBundle:Product:error404-product.html.twig", ["product" => $product]);
     }
 
 }

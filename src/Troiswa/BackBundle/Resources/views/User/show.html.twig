@@ -1,8 +1,22 @@
 {% extends "TroiswaBackBundle::layout-admin.html.twig" %}
 
-{% block content %}
-    <h1>User</h1>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("assets/css/plugins/morris.css", absolute=true) }}">
+{% endblock %}
 
+{% block h1 %}
+    Gestion des utilisateurs
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        <i class="fa fa-dashboard"></i>  Information de l'utilisateur {{ entity.firstname }} {{ entity.lastname }}
+    </li>
+{% endblock %}
+
+{% block content %}
     <table class="record_properties">
         <tbody>
             <tr>
@@ -41,17 +55,27 @@
                 <th>Birthdate</th>
                 <td>{{ entity.birthdate|date('Y-m-d H:i:s') }}</td>
             </tr>
+            <tr>
+                <th>Mes coupons</th>
+                <td>
+                    <ul>
+                        {% for usercoupon in entity.coupon %}
+                            <li>{{ usercoupon.coupon.detail }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
         </tbody>
     </table>
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('user') }}">
+        <a href="{{ path('troiswa_back_user') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('user_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('troiswa_back_user_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>

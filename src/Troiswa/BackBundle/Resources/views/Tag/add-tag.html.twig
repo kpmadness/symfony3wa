@@ -1,11 +1,13 @@
-{% extends "TroiswaBackBundle::layout-admin.html.twig" %}
+{% extends '::base.html.twig' %}
 
-{% block content %}
+{% block body -%}
+    <h1>Tag edit</h1>
+
     {{ form(edit_form) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('troiswa_back_user') }}">
+        <a href="{{ path('tag') }}">
             Back to the list
         </a>
     </li>
