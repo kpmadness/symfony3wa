@@ -10,9 +10,10 @@ class PasswordCheckValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
 
-        $pattern='#^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$#';
+        $pattern='#^([a-zA-Z0-9$\.\/-_%]){4,}$#';
 
         if($value!="admin" && (preg_match($pattern, $value)==false)){
+
             $this->context->addViolation($constraint->message);
         }
 

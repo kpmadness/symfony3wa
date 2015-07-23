@@ -38,6 +38,7 @@ twig:
     form:
         resources:
             - "TroiswaBackBundle:Form:fields.html.twig"
+            - "TroiswaFrontBundle:Form:fields.html.twig"
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"

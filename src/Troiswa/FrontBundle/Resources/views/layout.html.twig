@@ -1,0 +1,49 @@
+{% extends "::base.html.twig" %}
+
+{% set routePath=app.request.attributes.get("_route") %}
+
+{% block title %}
+    Shop Homepage - Start Bootstrap Template
+{% endblock %}
+
+{% block stylesheets %}
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ asset("assets-front/css/bootstrap.min.css", absolute=true) }}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{ asset("assets-front/css/shop-homepage.css", absolute=true) }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+    {% include 'TroiswaFrontBundle:Globals:header.html.twig' %}
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            {% include 'TroiswaFrontBundle:Globals:sidebar.html.twig' %}
+
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+
+    {% include 'TroiswaFrontBundle:Globals:footer.html.twig' %}
+
+{% endblock %}
+
+
+{% block javascript %}
+    <!-- jQuery -->
+    <script src="{{ asset("assets-front/js/jquery.js", absolute=true) }}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ asset("assets-front/js/bootstrap.min.js", absolute=true) }}"></script>
+{% endblock %}

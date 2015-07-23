@@ -5,8 +5,11 @@ namespace Troiswa\BackBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Troiswa\BackBundle\Entity\User;
 use Troiswa\BackBundle\Form\UserType;
+use Troiswa\BackBundle\Form\UserEditType;
 
 /**
  * User controller.
@@ -31,6 +34,7 @@ class UserController extends Controller
     }
     /**
      * Creates a new User entity.
+     * @Security("has_role('ROLE_COMMERCIAL')")
      *
      */
     public function createAction(Request $request)
@@ -43,15 +47,16 @@ class UserController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-
+            // hashé le mot de passe
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($entity);
-
-
             $passEncrypt = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
             $entity->setPassword($passEncrypt);
-//            dump($entity);
-//            die();
+
+            // Attribution du role
+            $roles = $em->getRepository('TroiswaBackBundle:Role')->findOneByName('client');
+            $entity->addRole($roles);
+
             $em->persist($entity);
             $em->flush();
 
@@ -134,6 +139,10 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
+            throw new AccessDeniedException("Vous n'avez pas les droits pour accéder à cette page");
+        }
+
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -142,6 +151,51 @@ class UserController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+
+    /**
+     * Displays a form to change role on an existing User entity.
+     *
+     */
+    public function editRoleAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('TroiswaBackBundle:User')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+
+        $form = $this->createForm(new UserEditType(), $entity);
+
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+
+        $deleteForm = $this->createDeleteForm($id);
+
+
+        $form->handleRequest($request);
+
+//        dump($formProduct);
+//        die();
+
+        if($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            //$em->persist($entity);
+            $em->flush();
+
+
+            // affichage du message du succès de modification des droits de l'utilisateur
+            $this->get('session')->getFlashBag()->add('success', "Votre modification de  droits a été effectuée avec succès");
+
+            return $this->redirectToRoute('troiswa_back_user_edit_role', ['id' => $id]);
+        }
+
+        return $this->render("TroiswaBackBundle:User:edit-role.html.twig",array(
+            "formRole" =>$form->createView(),
+            "delete_form" => $deleteForm->createView()));
     }
 
     /**
@@ -162,6 +216,7 @@ class UserController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing User entity.
      *
@@ -192,9 +247,10 @@ class UserController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a User entity.
-     *
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -232,4 +288,7 @@ class UserController extends Controller
             ->getForm()
         ;
     }
+
+
+
 }

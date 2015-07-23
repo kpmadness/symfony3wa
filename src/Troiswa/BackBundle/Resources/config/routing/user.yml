@@ -3,7 +3,7 @@ troiswa_back_user:
     defaults: { _controller: "TroiswaBackBundle:User:index" }
 
 troiswa_back_user_show:
-    path:     /{id}/show
+    path:     /show/{id}
     defaults: { _controller: "TroiswaBackBundle:User:show" }
 
 troiswa_back_user_new:
@@ -16,15 +16,19 @@ troiswa_back_user_create:
     methods:  POST
 
 troiswa_back_user_edit:
-    path:     /{id}/edit
+    path:     /edit/{id}
     defaults: { _controller: "TroiswaBackBundle:User:edit" }
 
+troiswa_back_user_edit_role:
+    path:     /edit_role/{id}
+    defaults: { _controller: "TroiswaBackBundle:User:editRole" }
+
 troiswa_back_user_update:
-    path:     /{id}/update
+    path:     /update/{id}
     defaults: { _controller: "TroiswaBackBundle:User:update" }
     methods:  [POST, PUT]
 
 troiswa_back_user_delete:
-    path:     /{id}/delete
+    path:     /delete/{id}
     defaults: { _controller: "TroiswaBackBundle:User:delete" }
     methods:  [POST, DELETE]

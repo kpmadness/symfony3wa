@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Troiswa\BackBundle\Validator\TelValid as TelValid;
 use Troiswa\BackBundle\Validator\PasswordCheck as PasswordCheck;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -20,7 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("mail")
  * @UniqueEntity("pseudo")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer
@@ -105,11 +106,26 @@ class User implements UserInterface
 
 
     /**
+     * @ORM\ManyToMany(targetEntity="Role")
+     * @ORM\JoinTable(name="user_role",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="id_role", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $roles;
+
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->coupon = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->coupon = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -349,7 +365,8 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        //return array('ROLE_USER');
+        return $this->roles->toArray();
     }
 
     /**
@@ -417,5 +434,38 @@ class User implements UserInterface
     public function getCoupon()
     {
         return $this->coupon;
+    }
+
+    /**
+     * Add roles
+     *
+     * @param \Troiswa\BackBundle\Entity\Role $roles
+     * @return User
+     */
+    public function addRole(\Troiswa\BackBundle\Entity\Role $roles)
+    {
+        $this->roles[] = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param \Troiswa\BackBundle\Entity\Role $roles
+     */
+    public function removeRole(\Troiswa\BackBundle\Entity\Role $roles)
+    {
+        $this->roles->removeElement($roles);
+    }
+
+    public function serialize()
+    {
+        return serialize(array($this->id));
+    }
+
+    public function unserialize($serialized)
+    {
+        list ($this->id) = unserialize($serialized);
     }
 }

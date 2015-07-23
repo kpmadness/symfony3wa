@@ -1,0 +1,14 @@
+{% extends "TroiswaBackBundle::layout-admin.html.twig" %}
+
+{% block content %}
+    {{ form(formRole) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('troiswa_back_user') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
