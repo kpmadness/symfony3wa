@@ -91,12 +91,14 @@ class ProductController extends Controller
 
         if($formProduct->isValid()) {
             //$em = $this->getDoctrine()->getManager();
-
             $cover=$product->getCover();
             $cover->setAlt($product->getTitle());
+
+//            $tag=$product->getTag();
+//            dump($tag);
             //$cover->upload();
 
-            //die;
+
 
 //            $em->persist($cover);
 

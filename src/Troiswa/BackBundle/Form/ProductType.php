@@ -51,7 +51,8 @@ class ProductType extends AbstractType
             ->add('tag','entity',
                 [
                     'class' => 'TroiswaBackBundle:Tag',
-                    'property' => 'tag'
+                    'property' => 'tag',
+                    'multiple' => true
                 ]
             )
             ->add('submit', 'submit');

@@ -3,7 +3,12 @@
 namespace Troiswa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Troiswa\BackBundle\Entity\Tag as Tag;
+use Troiswa\BackBundle\Entity\Brand as Brand;
+use Troiswa\BackBundle\Entity\Category as Category;
+use Troiswa\BackBundle\Entity\ProductCover as ProductCover;
 
 /**
  * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\ProductRepository")
@@ -54,6 +59,28 @@ class Product
     private $active;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=128)
+     * @Gedmo\Slug(fields={"title"})
+     */
+    private $slug;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="dateCreated", type="datetime")
+     */
+    private $dateCreated;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="dateUpdated", type="datetime")
+     */
+    private $dateUpdated;
+
+    /**
      * @var integer
      * @ORM\Column(name="quantity", type="integer")
      * @Assert\NotBlank(message="Attention")
@@ -96,6 +123,8 @@ class Product
      *
      */
     private $tag;
+
+
 
 
     /**
@@ -237,7 +266,7 @@ class Product
      * @param \Troiswa\BackBundle\Entity\Category $categ
      * @return Product
      */
-    public function setCateg(\Troiswa\BackBundle\Entity\Category $categ = null)
+    public function setCateg(Category $categ = null)
     {
         $this->categ = $categ;
 
@@ -261,7 +290,7 @@ class Product
      * @param \Troiswa\BackBundle\Entity\Brand $brand
      * @return Product
      */
-    public function setBrand(\Troiswa\BackBundle\Entity\Brand $brand)
+    public function setBrand(Brand $brand)
     {
         $this->brand = $brand;
 
@@ -284,7 +313,7 @@ class Product
      * @param \Troiswa\BackBundle\Entity\ProductCover $cover
      * @return Product
      */
-    public function setCover(\Troiswa\BackBundle\Entity\ProductCover $cover = null)
+    public function setCover(ProductCover $cover = null)
     {
         $this->cover = $cover;
 
@@ -307,7 +336,7 @@ class Product
      * @param \Troiswa\BackBundle\Entity\Tag $tag
      * @return Product
      */
-    public function addTag(\Troiswa\BackBundle\Entity\Tag $tag)
+    public function addTag(Tag $tag)
     {
         $this->tag[] = $tag;
 
@@ -319,7 +348,7 @@ class Product
      *
      * @param \Troiswa\BackBundle\Entity\Tag $tag
      */
-    public function removeTag(\Troiswa\BackBundle\Entity\Tag $tag)
+    public function removeTag(Tag $tag)
     {
         $this->tag->removeElement($tag);
     }
@@ -333,4 +362,76 @@ class Product
     {
         return $this->tag;
     }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Product
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set dateCreated
+     *
+     * @param \DateTime $dateCreated
+     * @return Product
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreated
+     *
+     * @return \DateTime 
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * Set dateUpdated
+     *
+     * @param \DateTime $dateUpdated
+     * @return Product
+     */
+    public function setDateUpdated($dateUpdated)
+    {
+        $this->dateUpdated = $dateUpdated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateUpdated
+     *
+     * @return \DateTime 
+     */
+    public function getDateUpdated()
+    {
+        return $this->dateUpdated;
+    }
+
+
+
 }

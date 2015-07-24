@@ -12,4 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
+
+    public function findCategoryByPosition()
+    {
+        $query= $this->createQueryBuilder("categ");
+
+        $query->select('categ')
+              ->orderBy('categ.position','asc');
+
+        $result = $query->getQuery()->getResult();
+
+//        dump($result);
+//        die();
+
+        return $result;
+
+    }
+
+
+
 }

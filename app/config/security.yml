@@ -52,7 +52,7 @@ security:
                 login_path: troiswa_back_login
                 default_target_path: troiswa_back_administration
                 always_use_default_target_path: true
-                csrf_provider: security.csrf.token_manager
+#                csrf_provider: security.csrf.token_manager
 
             logout:
                 path: troiswa_back_logout

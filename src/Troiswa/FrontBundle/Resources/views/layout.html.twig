@@ -23,7 +23,8 @@
 
         <div class="row">
 
-            {% include 'TroiswaFrontBundle:Globals:sidebar.html.twig' %}
+            {#{% include 'TroiswaFrontBundle:Globals:sidebar.html.twig' %}#}
+            {{ render(controller('TroiswaFrontBundle:Main:displayCategoryMenu')) }}
 
             {% block content %}
 

@@ -3,7 +3,12 @@
 namespace Troiswa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Troiswa\BackBundle\Entity\Tag as Tag;
+use Troiswa\BackBundle\Entity\Brand as Brand;
+use Troiswa\BackBundle\Entity\Category as Category;
+use Troiswa\BackBundle\Entity\ProductCover as ProductCover;
 
 /**
  * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\ProductRepository")
@@ -54,6 +59,28 @@ class Product
     private $active;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=128)
+     * @Gedmo\Slug(fields={"title"})
+     */
+    private $slug;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="dateCreated", type="datetime")
+     */
+    private $dateCreated;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="dateUpdated", type="datetime")
+     */
+    private $dateUpdated;
+
+    /**
      * @var integer
      * @ORM\Column(name="quantity", type="integer")
      * @Assert\NotBlank(message="Attention")
@@ -97,6 +124,16 @@ class Product
      */
     private $tag;
 
+
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tag = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -229,7 +266,7 @@ class Product
      * @param \Troiswa\BackBundle\Entity\Category $categ
      * @return Product
      */
-    public function setCateg(\Troiswa\BackBundle\Entity\Category $categ = null)
+    public function setCateg(Category $categ = null)
     {
         $this->categ = $categ;
 
@@ -253,7 +290,7 @@ class Product
      * @param \Troiswa\BackBundle\Entity\Brand $brand
      * @return Product
      */
-    public function setBrand(\Troiswa\BackBundle\Entity\Brand $brand)
+    public function setBrand(Brand $brand)
     {
         $this->brand = $brand;
 
@@ -276,7 +313,7 @@ class Product
      * @param \Troiswa\BackBundle\Entity\ProductCover $cover
      * @return Product
      */
-    public function setCover(\Troiswa\BackBundle\Entity\ProductCover $cover = null)
+    public function setCover(ProductCover $cover = null)
     {
         $this->cover = $cover;
 
@@ -291,5 +328,38 @@ class Product
     public function getCover()
     {
         return $this->cover;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \Troiswa\BackBundle\Entity\Tag $tag
+     * @return Product
+     */
+    public function addTag(Tag $tag)
+    {
+        $this->tag[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \Troiswa\BackBundle\Entity\Tag $tag
+     */
+    public function removeTag(Tag $tag)
+    {
+        $this->tag->removeElement($tag);
+    }
+
+    /**
+     * Get tag
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTag()
+    {
+        return $this->tag;
     }
 }

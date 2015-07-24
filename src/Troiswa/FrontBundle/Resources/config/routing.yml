@@ -1,3 +1,17 @@
 troiswa_front_homepage:
     path: /
     defaults: { _controller:TroiswaFrontBundle:Main:index }
+
+troiswa_front_page_product:
+    path: /product/{idprod}
+    defaults: { _controller:TroiswaFrontBundle:Main:displayPageProductFront }
+
+troiswa_front_cart_add:
+    pattern: /cart/add/{id}
+    defaults: { _controller:TroiswaFrontBundle:Main:addCart }
+    requirements:
+        id: \d+
+
+troiswa_front_cart:
+    pattern: /cart
+    defaults: { _controller:TroiswaFrontBundle:Main:cart }

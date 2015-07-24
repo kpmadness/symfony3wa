@@ -94,7 +94,6 @@ class MainController extends Controller
 
         return $this->render("TroiswaBackBundle:Main:index.html.twig",["resultCriteria" => $productsGroupBy]);
 
-
     }
 
 }

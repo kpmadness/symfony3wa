@@ -227,7 +227,7 @@ th {
     page-break-inside: avoid;
   }
   img {
-    max-width: 100% !important;
+    /*max-width: 100% !important;*/
   }
   p,
   h2,
@@ -1126,8 +1126,9 @@ img {
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
   display: block;
-  max-width: 100%;
-  height: auto;
+  text-align: center;
+  /*max-width: 100%;*/
+  /*height: auto;*/
 }
 .img-rounded {
   border-radius: 6px;

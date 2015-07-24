@@ -65,7 +65,3 @@ troiswa_back_login_check:
 troiswa_back_logout:
     pattern:   /logout
 
-
-
-
-

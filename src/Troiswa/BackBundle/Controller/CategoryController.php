@@ -110,8 +110,11 @@ class CategoryController extends Controller
 
         $em=$this->getDoctrine()->getManager();
 
+//        $category=$em->getRepository('TroiswaBackBundle:Category')
+//            ->findBy(array(),array('position' => 'ASC', 'title' => 'ASC'));
+
         $category=$em->getRepository('TroiswaBackBundle:Category')
-            ->findBy(array(),array('position' => 'ASC', 'title' => 'ASC'));
+            ->findCategoryByPosition();
 
 //        dump($category);
 //        die();
