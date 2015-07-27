@@ -12,6 +12,7 @@
 
     <!-- Custom CSS -->
     <link href="{{ asset("assets-front/css/shop-homepage.css", absolute=true) }}" rel="stylesheet">
+    <link href="{{ asset("assets/font-awesome/css/font-awesome.css", absolute=true) }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -24,11 +25,15 @@
         <div class="row">
 
             {#{% include 'TroiswaFrontBundle:Globals:sidebar.html.twig' %}#}
+            <div class="col-md-3">
             {{ render(controller('TroiswaFrontBundle:Main:displayCategoryMenu')) }}
+            </div>
 
+            <div class="col-md-9">
             {% block content %}
 
             {% endblock %}
+            </div>
 
         </div>
 

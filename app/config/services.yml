@@ -7,3 +7,12 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    #exemple pour test utilisation d'un service
+#    troiswa_back.monsuperservice:
+#            		class: Troiswa\BackBundle\Util\Utility
+
+    troiswa_front.cart:
+        class: Troiswa\FrontBundle\Util\Cart
+        arguments: ["@session", "@doctrine.orm.entity_manager"]
+

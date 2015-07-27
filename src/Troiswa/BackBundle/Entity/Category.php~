@@ -3,6 +3,7 @@
 namespace Troiswa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Troiswa\BackBundle\Entity\Product;
@@ -12,7 +13,7 @@ use Troiswa\BackBundle\Entity\Product;
  * Category
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\CategoryRepository")
  */
 class Category
 {
@@ -35,6 +36,14 @@ class Category
     /**
      * @var string
      *
+     * @ORM\Column(name="slug", type="string", length=128)
+     * @Gedmo\Slug(fields={"title"})
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="string", length=200)
      */
     private $description;
@@ -51,6 +60,14 @@ class Category
      */
     protected $products;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -175,5 +192,42 @@ class Category
         }
 
         return true;
+    }
+
+
+    /**
+     * Add products
+     *
+     * @param \Troiswa\BackBundle\Entity\Product $products
+     * @return Category
+     */
+    public function addProduct(\Troiswa\BackBundle\Entity\Product $products)
+    {
+//        die("test");
+        $this->products[] = $products;
+        $products->setCateg($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \Troiswa\BackBundle\Entity\Product $products
+     */
+    public function removeProduct(\Troiswa\BackBundle\Entity\Product $products)
+    {
+        $this->products->removeElement($products);
+        $products->setCateg(null);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

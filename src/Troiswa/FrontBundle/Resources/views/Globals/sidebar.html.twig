@@ -1,10 +1,9 @@
 {% set routePath=app.request.attributes.get("_route") %}
-    <div class="col-md-3">
-        <p class="lead">Commerce Distrib.</p>
-        <div class="list-group">
-            {#{{ dump(routePath) }}#}
-            {% for onecategory in category %}
-                <a href="#" class="list-group-item {% if routePath=="troiswa_front_page_product" %} active {% endif %}" >{{ onecategory.title }}</a>
-            {% endfor %}
-        </div>
-    </div>
+<p class="lead">Commerce Distrib.</p>
+<div class="list-group">
+    {#{{ dump(routePath) }}#}
+    {% for onecategory in category %}
+        <a href="{{ path('troiswa_front_page_category', { idcateg: onecategory.id }) }}" class="list-group-item {% if routePath=="troiswa_front_page_product" %} active {% endif %}" >{{ onecategory.title }}</a>
+    {% endfor %}
+</div>
+

@@ -1,7 +1,7 @@
 {% extends "TroiswaFrontBundle::layout.html.twig" %}
 
 {% block content %}
-<div class="container">
+{#<div class="container">#}
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
             <table class="table table-hover">
@@ -17,30 +17,42 @@
                 </thead>
 
                 <tbody>
-
-                {% for onecart in cart %}
+                {% set total =0 %}
+                {% for product in products %}
                 <tr>
+
                     <td class="col-sm-8 col-md-6">
                         <div class="media">
-                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                            {% if product.cover != null  %}
+                                {%  set img=asset(product.cover.getWebPath("small")) %}
+                            {% else %}
+                                {%  set img=asset("upload/products/no-image.png") %}
+                            {% endif %}
+                            <a class="thumbnail pull-left" href="#" style="text-align: center"><img class="media-object" src="{{ img }}" style="width: 72px; height: 72px;"> </a>
                             <div class="media-body">
-                                <h4 class="media-heading"><a href="#">{{ onecart.title }}</a></h4>
-                                <h5 class="media-heading"> by <a href="#">{{ onecart.brand.title }}</a></h5>
+                                <h4 class="media-heading"><a href="#">{{ product.title }}</a></h4>
+                                <h5 class="media-heading"> by <a href="#">{{ product.brand.title }}</a></h5>
                                 <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
                             </div>
                         </div></td>
                     <td class="col-sm-1 col-md-1" style="text-align: center">
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="3">
+                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{ cart[product.id]['quantity'] }}" disabled>
+                        <a href="{{ path('troiswa_front_cart_decrease', { id: product.id }) }}"><i class="fa fa-minus"></i></a>
+                        <a href="{{ path('troiswa_front_cart_increase', { id: product.id }) }}"><i class="fa fa-plus-square"></i></a>
                     </td>
-                    <td class="col-sm-1 col-md-1 text-center"><strong>{{ onecart.price }} €</strong></td>
-                    <td class="col-sm-1 col-md-1 text-center"><strong>{{ onecart.price }} €</strong></td>
+                    <td class="col-sm-1 col-md-1 text-center"><strong>{{ product.price }} €</strong></td>
+                    <td class="col-sm-1 col-md-1 text-center"><strong>{{ product.price*cart[product.id]['quantity'] }} €</strong></td>
                     <td class="col-sm-1 col-md-1">
+                        <a href="{{ path('troiswa_front_cart_remove', { id: product.id }) }}" alt="{{ product.title }}">
                         <button type="button" class="btn btn-danger">
                             <span class="glyphicon glyphicon-remove"></span> Remove
-                        </button></td>
+                        </button>
+                        </a>
+                    </td>
+                    {%  set temp =product.price*cart[product.id]['quantity'] %}
+                    {%  set total = total+temp %}
                 </tr>
                 {% endfor %}
-
 
                 {#{% for onproduct in products %}#}
                     {#{{ panier[onproduct.id].quantity }}#}
@@ -51,23 +63,23 @@
                     <td>   </td>
                     <td>   </td>
                     <td><h5>Subtotal</h5></td>
-                    <td class="text-right"><h5><strong>$180.00</strong></h5></td>
+                    <td class="text-right"><h5><strong>{{ total }} €</strong></h5></td>
                 </tr>
 
-                <tr>
+                <!--tr>
                     <td>   </td>
                     <td>   </td>
                     <td>   </td>
                     <td><h5>Estimated shipping</h5></td>
                     <td class="text-right"><h5><strong>€ 7.50</strong></h5></td>
-                </tr>
+                </tr-->
 
                 <tr>
                     <td>   </td>
                     <td>   </td>
                     <td>   </td>
                     <td><h3>Total</h3></td>
-                    <td class="text-right"><h3><strong>$187.50</strong></h3></td>
+                    <td class="text-right"><h3><strong>{{ total }} €</strong></h3></td>
                 </tr>
 
                 <tr>
@@ -88,5 +100,6 @@
             </table>
         </div>
     </div>
-</div>
+{#</div>#}
+
 {% endblock %}

@@ -6,12 +6,36 @@ troiswa_front_page_product:
     path: /product/{idprod}
     defaults: { _controller:TroiswaFrontBundle:Main:displayPageProductFront }
 
-troiswa_front_cart_add:
-    pattern: /cart/add/{id}
-    defaults: { _controller:TroiswaFrontBundle:Main:addCart }
-    requirements:
-        id: \d+
+troiswa_front_page_category:
+    path: /category/{idcateg}
+    defaults: { _controller:TroiswaFrontBundle:Main:displayProductByCategory }
 
 troiswa_front_cart:
     pattern: /cart
-    defaults: { _controller:TroiswaFrontBundle:Main:cart }
+    defaults: { _controller:TroiswaFrontBundle:Cart:cart }
+
+troiswa_front_cart_add:
+    pattern: /cart/add/{id}
+    defaults: { _controller:TroiswaFrontBundle:Cart:addCart }
+    requirements:
+        id: \d+
+
+troiswa_front_cart_remove:
+    pattern: /cart/remove/{id}
+    defaults: { _controller:TroiswaFrontBundle:Cart:removeCart }
+    requirements:
+        id: \d+
+
+troiswa_front_cart_increase:
+    pattern: /cart/increase/{id}
+    defaults: { _controller:TroiswaFrontBundle:Cart:increaseCart }
+    requirements:
+        id: \d+
+
+troiswa_front_cart_decrease:
+    pattern: /cart/decrease/{id}
+    defaults: { _controller:TroiswaFrontBundle:Cart:decreaseCart }
+    requirements:
+        id: \d+
+
+

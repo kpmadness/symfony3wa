@@ -134,31 +134,30 @@ class ProductRepository extends EntityRepository
         return $result;
     }
 
-//    public function findProductWithMaxTag(){
-//
-//        $query= $this->createQueryBuilder("prod");
-//
-//        $query->leftJoin('product_tag as pt')
-//              ->addSelect('COUNT(pt.product.id)')
-//
-//
-//              ->where("p.id = pt.product_id")
-//              ->andWhere("p.active = :active")
-//              ->andWhere("prod.quantity > :quantity")
-//              ->setParameter("active", 1)
-//              ->orderBy('p.id','ASC')
-//              ->groupBy('pt.product_id');
-//
-//
-//        $result = $query->getQuery()->getResult();
-//
-////        dump($result);
-////        die();
-//
-//        return $result;
-//    }
+    public function findProductWithMaxTag(){
 
-    public function findProductCartFrontAction($tabId){
+        $query= $this->createQueryBuilder("prod");
+
+        $query->leftJoin('prod.tag', 'pt')
+              ->addSelect('COUNT(prod.id) as HIDDEN nb')
+              ->where("prod.active = :active")
+              ->andWhere("prod.quantity > :quantity")
+              ->setParameter("active", 1)
+              ->setParameter("quantity", 0)
+              ->orderBy('nb','DESC')
+              ->groupBy('prod.id')
+              ->setMaxResults(5);
+
+
+        $result = $query->getQuery()->getResult();
+
+//        dump($result);
+//        die();
+
+        return $result;
+    }
+
+    public function findProductCartFront($tabId){
 
         $query= $this->createQueryBuilder("prod");
 
@@ -171,5 +170,25 @@ class ProductRepository extends EntityRepository
         return $result;
 
     }
+
+    public function findProductByCategory($idcateg){
+
+        $query= $this->createQueryBuilder('prod');
+
+        $query->select('prod')
+              ->where("prod.categ = :categ")
+              ->setParameter("categ",$idcateg);
+
+        $result = $query->getQuery()->getResult();
+
+//        dump($result);
+//        die();
+
+        return $result;
+
+    }
+
+
+
 
 }
