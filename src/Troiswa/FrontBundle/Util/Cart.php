@@ -51,14 +51,11 @@ class Cart
 
         $cart=json_decode($this->session->get('cart'),true);
 
-        $qty = $cart[$product->getId()]['quantity'];
-
         if (array_key_exists($product->getId(), $cart))
         {
                unset($cart[$product->getId()]);
+                $this->session->set('cart', json_encode($cart));
         }
-
-        $this->session->set('cart', json_encode($cart));
 
 //        dump($cart);
 //        die();
@@ -72,13 +69,11 @@ class Cart
 
         if (array_key_exists($product->getId(), $cart))
         {
-            $qty += $cart[$product->getId()]['quantity'];
+            $qty += 1;
+            $cart[$product->getId()]['quantity'] = $qty;
+
+            $this->session->set('cart', json_encode($cart));
         }
-
-        $this->session->set('cart', json_encode($cart));
-
-        dump($cart);
-        die();
 
     }
 
@@ -90,16 +85,15 @@ class Cart
 
         if (array_key_exists($product->getId(), $cart))
         {
-            echo 'tata';
-            dump($cart);
-            die();
-            $qty -= $cart[$product->getId()]['quantity'];
+            $qty -= 1;
+            $cart[$product->getId()]['quantity'] = $qty;
+
+            if($qty==0){
+                unset($cart[$product->getId()]);
+            }
+
+            $this->session->set('cart', json_encode($cart));
         }
-
-        $this->session->set('cart', json_encode($cart));
-
-        dump($cart);
-        die();
 
     }
 

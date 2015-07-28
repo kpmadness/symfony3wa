@@ -11,6 +11,8 @@ security:
             algorithm: bcrypt
             cost: 15
 
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
         ROLE_ADMIN: [ROLE_COMMERCIAL, ROLE_ALLOWED_TO_SWITCH]
@@ -32,6 +34,9 @@ security:
             # Visualiser la méthode loadUserByUsername dans UserRepository pour mieux comprendre
             entity : { class: TroiswaBackBundle:User }
 
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt|error)|css|images|js)/
@@ -39,6 +44,10 @@ security:
 
         login_firewall:
             pattern: ^/admin/login$
+            anonymous: true
+
+        front_login:
+            pattern: ^/login$
             anonymous: true
 
         administration:
@@ -74,14 +83,31 @@ security:
                 path: / # accessible sur toutes les urls
                 domain: ~ #valeur par défaut : accessible partout sur mon site
 
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
+
+            logout: true
+            anonymous: true
+
+            remember_me:
+                key: "%secret%"
+                lifetime: 172800 # 2 jours
+                path: / # accessible sur toutes les urls
+                domain: ~ #valeur par défaut : accessible partout sur mon site
+
     access_control:
 #         seul l'administrateur à accès aux pages produit
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: ROLE_CLIENT }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 #         seul l'administrateur à accès aux pages des utilisateurs
 #        - { path: ^/admin/user, role: ROLE_ADMIN }
 
 #        main:
 #            anonymous: ~
-

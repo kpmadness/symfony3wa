@@ -3,6 +3,7 @@
 namespace Troiswa\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Troiswa\BackBundle\Entity\Product;
 
@@ -25,33 +26,50 @@ class CartController extends Controller
     }
 
 
-    public function removeCartAction(Product $product)
+    public function removeCartAction(Product $product, Request $request)
     {
 
         $cartService = $this->get('troiswa_front.cart');
 
         $cartService->remove($product);
 
+        // Si je suis en ajax
+        if ($request->isXmlHttpRequest())
+        {
+            return new JsonResponse("Votre produit a bien été supprimé");
+        }
 
         return $this->redirectToRoute('troiswa_front_cart');
     }
 
-    public function increaseCartAction(Product $product)
+    public function increaseCartAction(Product $product, Request $request)
     {
 
         $cartService = $this->get('troiswa_front.cart');
 
         $cartService->increaseQuantity($product);
 
+        // Si je suis en ajax
+        if ($request->isXmlHttpRequest())
+        {
+            return new JsonResponse("Votre produit a bien été incrémenté");
+        }
+
         return $this->redirectToRoute('troiswa_front_cart');
     }
 
-    public function decreaseCartAction(Product $product)
+    public function decreaseCartAction(Product $product, Request $request)
     {
 
         $cartService = $this->get('troiswa_front.cart');
 
         $cartService->decreaseQuantity($product);
+
+        // Si je suis en ajax
+        if ($request->isXmlHttpRequest())
+        {
+            return new JsonResponse("Votre produit a bien été décrémenté");
+        }
 
         return $this->redirectToRoute('troiswa_front_cart');
     }

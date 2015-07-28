@@ -4,7 +4,7 @@
 {#<div class="container">#}
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <table class="table table-hover">
+            <table class="table table-hover" id="detailCart">
 
                 <thead>
                 <tr>
@@ -19,7 +19,7 @@
                 <tbody>
                 {% set total =0 %}
                 {% for product in products %}
-                <tr>
+                <tr class="item-product">
 
                     <td class="col-sm-8 col-md-6">
                         <div class="media">
@@ -37,19 +37,17 @@
                         </div></td>
                     <td class="col-sm-1 col-md-1" style="text-align: center">
                         <input type="email" class="form-control" id="exampleInputEmail1" value="{{ cart[product.id]['quantity'] }}" disabled>
-                        <a href="{{ path('troiswa_front_cart_decrease', { id: product.id }) }}"><i class="fa fa-minus"></i></a>
-                        <a href="{{ path('troiswa_front_cart_increase', { id: product.id }) }}"><i class="fa fa-plus-square"></i></a>
+                        <a href="{{ path('troiswa_front_cart_decrease', { id: product.id }) }}" class="moins"><i class="fa fa-minus"></i></a>
+                        <a href="{{ path('troiswa_front_cart_increase', { id: product.id }) }}" class="plus"><i class="fa fa-plus-square"></i></a>
                     </td>
-                    <td class="col-sm-1 col-md-1 text-center"><strong>{{ product.price }} €</strong></td>
-                    <td class="col-sm-1 col-md-1 text-center"><strong>{{ product.price*cart[product.id]['quantity'] }} €</strong></td>
+                    <td class="col-sm-1 col-md-1 text-center price"><strong><span>{{ product.price }}</span> €</strong></td>
+                    <td class="col-sm-1 col-md-1 text-center pricetotal"><strong><span>{{ product.price*cart[product.id]['quantity'] }}</span> €</strong></td>
                     <td class="col-sm-1 col-md-1">
-                        <a href="{{ path('troiswa_front_cart_remove', { id: product.id }) }}" alt="{{ product.title }}">
-                        <button type="button" class="btn btn-danger">
+                        <a href="{{ path('troiswa_front_cart_remove', { id: product.id }) }}" class="btn btn-danger">
                             <span class="glyphicon glyphicon-remove"></span> Remove
-                        </button>
                         </a>
                     </td>
-                    {%  set temp =product.price*cart[product.id]['quantity'] %}
+                    {%  set temp = product.price*cart[product.id]['quantity'] %}
                     {%  set total = total+temp %}
                 </tr>
                 {% endfor %}
@@ -63,7 +61,7 @@
                     <td>   </td>
                     <td>   </td>
                     <td><h5>Subtotal</h5></td>
-                    <td class="text-right"><h5><strong>{{ total }} €</strong></h5></td>
+                    <td class="text-right"><h5><strong><span>{{ total }}</span> €</strong></h5></td>
                 </tr>
 
                 <!--tr>
@@ -79,7 +77,7 @@
                     <td>   </td>
                     <td>   </td>
                     <td><h3>Total</h3></td>
-                    <td class="text-right"><h3><strong>{{ total }} €</strong></h3></td>
+                    <td class="text-right"><h3><strong><span>{{ total }}</span> €</strong></h3></td>
                 </tr>
 
                 <tr>
@@ -102,4 +100,10 @@
     </div>
 {#</div>#}
 
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    <script src="{{ asset('assets-front/js/cart.js') }}"></script>
 {% endblock %}

@@ -38,4 +38,6 @@ troiswa_front_cart_decrease:
     requirements:
         id: \d+
 
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 

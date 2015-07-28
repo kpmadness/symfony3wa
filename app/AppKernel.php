@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Troiswa\FrontBundle\TroiswaFrontBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test','prod', 'benchmark'))) {
