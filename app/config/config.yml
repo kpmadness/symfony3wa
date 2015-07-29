@@ -7,6 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
+    ismaintenance: false
 
 framework:
     #esi:             ~
@@ -95,4 +96,4 @@ stof_doctrine_extensions:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: Troiswa\FrontBundle\Entity\ClientFOS
+    user_class: Troiswa\FrontBundle\Entity\ClientFosUser

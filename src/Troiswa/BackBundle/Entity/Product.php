@@ -68,7 +68,7 @@ class Product
 
     /**
      * @var \DateTime
-     * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="dateCreated", type="datetime")
      */
     private $dateCreated;
@@ -123,8 +123,6 @@ class Product
      *
      */
     private $tag;
-
-
 
 
     /**
@@ -263,7 +261,7 @@ class Product
     /**
      * Set categ
      *
-     * @param \Troiswa\BackBundle\Entity\Category $categ
+     * @param Category $categ
      * @return Product
      */
     public function setCateg(Category $categ = null)
@@ -276,7 +274,7 @@ class Product
     /**
      * Get categ
      *
-     * @return \Troiswa\BackBundle\Entity\Category 
+     * @return Category
      */
     public function getCateg()
     {
@@ -287,7 +285,7 @@ class Product
     /**
      * Set brand
      *
-     * @param \Troiswa\BackBundle\Entity\Brand $brand
+     * @param Brand $brand
      * @return Product
      */
     public function setBrand(Brand $brand)
@@ -300,7 +298,7 @@ class Product
     /**
      * Get brand
      *
-     * @return \Troiswa\BackBundle\Entity\Brand 
+     * @return Brand
      */
     public function getBrand()
     {
@@ -310,7 +308,7 @@ class Product
     /**
      * Set cover
      *
-     * @param \Troiswa\BackBundle\Entity\ProductCover $cover
+     * @param ProductCover $cover
      * @return Product
      */
     public function setCover(ProductCover $cover = null)
@@ -323,7 +321,7 @@ class Product
     /**
      * Get cover
      *
-     * @return \Troiswa\BackBundle\Entity\ProductCover 
+     * @return ProductCover
      */
     public function getCover()
     {
@@ -333,7 +331,7 @@ class Product
     /**
      * Add tag
      *
-     * @param \Troiswa\BackBundle\Entity\Tag $tag
+     * @param Tag $tag
      * @return Product
      */
     public function addTag(Tag $tag)
@@ -346,7 +344,7 @@ class Product
     /**
      * Remove tag
      *
-     * @param \Troiswa\BackBundle\Entity\Tag $tag
+     * @param Tag $tag
      */
     public function removeTag(Tag $tag)
     {

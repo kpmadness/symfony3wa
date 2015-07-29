@@ -23,4 +23,17 @@
         <input type="number" value="1" name="qty">
         <button>Ajouter au panier</button>
     </form>
+
+    <div>
+        <h5>Commentez ce produit</h5>
+         {{ render(controller('TroiswaFrontBundle:Main:displayCommentFormProduct', {product : product, originalRequest : app.request})) }}
+    </div>
+
+    <div>
+        <h6>Les commentaires de ce produit</h6>
+
+        <p></p>
+    </div>
 {% endblock %}
+
+

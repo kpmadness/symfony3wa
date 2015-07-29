@@ -1,0 +1,210 @@
+<?php
+
+namespace Troiswa\FrontBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Troiswa\FrontBundle\Entity\ClientFosUser as Client;
+use Troiswa\BackBundle\Entity\Product as Product;
+
+/**
+ * Comment
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Troiswa\FrontBundle\Repository\CommentRepository")
+ */
+class Comment
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var number
+     *
+     * @ORM\Column(name="note", type="integer", length=255)
+     */
+    private $note;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comments", type="string", length=255)
+     */
+    private $comments;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Troiswa\BackBundle\Entity\Product")
+     */
+    private $product;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Troiswa\FrontBundle\Entity\ClientFosUser")
+     */
+    private $author;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="dateCreated", type="datetime")
+     */
+    private $dateCreated;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Comment")
+     */
+    private $parent;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set note
+     *
+     * @param string $note
+     * @return Comment
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return string 
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * Set comments
+     *
+     * @param string $comments
+     * @return Comment
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Set product
+     *
+     * @param Product $product
+     * @return Comment
+     */
+    public function setProduct(Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set author
+     *
+     * @param Client $author
+     * @return Comment
+     */
+    public function setAuthor(Client $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return Client
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set dateCreated
+     *
+     * @param \DateTime $dateCreated
+     * @return Comment
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreated
+     *
+     * @return \DateTime 
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Troiswa\FrontBundle\Entity\Comment $parent
+     * @return Comment
+     */
+    public function setParent(\Troiswa\FrontBundle\Entity\Comment $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Troiswa\FrontBundle\Entity\Comment 
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+}

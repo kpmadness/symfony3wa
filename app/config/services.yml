@@ -16,3 +16,13 @@ services:
         class: Troiswa\FrontBundle\Util\Cart
         arguments: ["@session", "@doctrine.orm.entity_manager"]
 
+    troiswa_front.twig.twig_extension:
+        class: Troiswa\FrontBundle\Twig\Extension
+        tags:
+            - { name: twig.extension }
+
+    troiswa_front.maintenance:
+        class: Troiswa\FrontBundle\Listener\MaintenanceListener
+        arguments: ["%ismaintenance%", "@twig"]
+        tags:
+          - { name: kernel.event_listener, event: kernel.request, method: onMaintenance }
